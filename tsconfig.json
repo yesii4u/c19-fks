@@ -36,13 +36,8 @@
     "node_modules",
     ".nuxt",
     "dist"
-<<<<<<< HEAD
   ],
   "router": {
-    "base": "/c19-fks/"
+    "base": "/c19fks/"
   }
-
-=======
-  ]
->>>>>>> 01210ca (Initialize repository)
 }

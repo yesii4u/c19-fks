@@ -14,16 +14,9 @@
     />
     <div v-if="dataLoaded">
       <v-row class="DataBlock">
-<<<<<<< HEAD
         <!--  confirmed-cases-attributes-card-map-f :graph-data="Data" /    -->
         <confirmed-cases-attributes-card-city :graph-data="Data" />
         <not-public-card :graph-data="Data" />
-=======
-        <confirmed-cases-attributes-card-map-f :graph-data="Data" />
-        <confirmed-cases-attributes-card-city :graph-data="Data" />
-        <not-public-card :graph-data="Data" />
-
->>>>>>> 01210ca (Initialize repository)
         <confirmed-cases-details-card :graph-data="Data" />
         <confirmed-cases-attributes-card :graph-data="Data" />
         <confirmed-cases-number-card :graph-data="Data" />
@@ -47,13 +40,8 @@ import News from '@/data/news.json'
 import ConfirmedCasesDetailsCard from '@/components/cards/ConfirmedCasesDetailsCard.vue'
 import ConfirmedCasesNumberCard from '@/components/cards/ConfirmedCasesNumberCard.vue'
 import ConfirmedCasesAttributesCard from '@/components/cards/ConfirmedCasesAttributesCard.vue'
-<<<<<<< HEAD
 /// import ConfirmedCasesAttributesCardMapF from '@/components/cards/ConfirmedCasesAttributesCardMapF.vue'
 import ConfirmedCasesAttributesCardCity from '@/components/cards/ConfirmedCasesAttributesCardCity.vue'
-=======
-import ConfirmedCasesAttributesCardCity from '@/components/cards/ConfirmedCasesAttributesCardCity.vue'
-import ConfirmedCasesAttributesCardMapF from '@/components/cards/ConfirmedCasesAttributesCardMapF.vue'
->>>>>>> 01210ca (Initialize repository)
 import NotPublicCard from '@/components/cards/NotPublicCard.vue'
 import TestedNumberCard from '@/components/cards/TestedNumberCard.vue'
 import TelephoneAdvisoryReportsNumberCard from '@/components/cards/TelephoneAdvisoryReportsNumberCard.vue'
@@ -67,11 +55,7 @@ export default Vue.extend({
     ConfirmedCasesDetailsCard,
     ConfirmedCasesNumberCard,
     ConfirmedCasesAttributesCard,
-<<<<<<< HEAD
     // ConfirmedCasesAttributesCardMapF,
-=======
-    ConfirmedCasesAttributesCardMapF,
->>>>>>> 01210ca (Initialize repository)
     ConfirmedCasesAttributesCardCity,
     NotPublicCard,
     TelephoneAdvisoryReportsNumberCard,

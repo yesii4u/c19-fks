@@ -9,24 +9,14 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nuxt-ts",
-<<<<<<< HEAD
     "build": "nuxt-ts build",
-    "start": "cross-env NODE_ENV=production nuxt-ts start",
     "generate:deploy": "nuxt-ts generate",
+    "start": "cross-env NODE_ENV=production nuxt-ts start",
 
-    "build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts build",
-    "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts generate",
+    "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt-ts build",
+    "generate:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt-ts generate",
 
     "generate": "eslint './**/*.{js,ts,vue}' && nuxt-ts generate",
-=======
-
-    "build": "nuxt-ts build",
-    "start": "cross-env NODE_ENV=production nuxt-ts start",
-
-    "generate:deploy": "nuxt-ts generate",
-
-    "generateF": "eslint './**/*.{js,ts,vue}' && nuxt-ts generate",
->>>>>>> 01210ca (Initialize repository)
     "lint-and-generate": "eslint './**/*.{js,ts,vue}' && nuxt-ts generate",
     "test": "echo 'skip tests (there is no test)'",
     "lint": "eslint './**/*.{js,ts,vue}'",

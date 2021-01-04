@@ -17,33 +17,19 @@
             <small class="MapCity-DataInfo-summary-unit"
               >{{ info.lText }}{{ $t('人') }}</small
             >
-<<<<<<< HEAD
-=======
-            <!--
-            <span class="MapCity-DataInfo-summary-date">{{ lastUpdate }}{{ $t('の累計') }}</span>
-            <span class="MapCity-DataInfo-summary-unit">{{ totalPersons }}{{ $t('人') }}</span>
-          -->
->>>>>>> 01210ca (Initialize repository)
           </span>
         </span>
       </div>
 
       <div class="MapCity-Map">
-<<<<<<< HEAD
         <client-only>
-=======
-        <no-ssr>
->>>>>>> 01210ca (Initialize repository)
           <l-map
             ref="map"
             :zoom="mapOptions.zoom"
             :min-zoom="mapOptions.minZoom"
             :max-zoom="mapOptions.maxZoom"
             :center="mapOptions.center"
-<<<<<<< HEAD
             :prefer-canvas="mapOptions.pCanvas"
-=======
->>>>>>> 01210ca (Initialize repository)
           >
             <!-- add.tile -->
             <l-tile-layer :url="tile.url" :attribution="tile.attribution" />
@@ -57,15 +43,6 @@
               :lat-lng="marker"
               :color="markercolor"
             >
-<<<<<<< HEAD
-=======
-              <!-- custom icon-marker -->
-              <!--  l-icon
-              :icon-size="dynamicSize"
-              :icon-anchor="dynamicAnchor"
-              :icon-url="iUrl"
-            ></l-icon   -->
->>>>>>> 01210ca (Initialize repository)
               <!-- add.popup -->
               <l-popup :content="marker.contents" />
               <l-tooltip :content="marker.contents" />
@@ -81,23 +58,9 @@
               :weight="weight"
             />
 
-<<<<<<< HEAD
             <l-control position="bottomright" />
           </l-map>
         </client-only>
-=======
-            <!--l-image-overlay :url="imageurl" :bounds="imagebounds"></l-image-overlay   -->
-            <l-control position="bottomright">
-              <!--l-domutil-create
-                  'div', 'info legend',
-                  :grades : [0, 10, 20, 35, 50, 60, 75, 86],
-                  :labels = []
-                  >
-                  </l-domutil-create    -->
-            </l-control>
-          </l-map>
-        </no-ssr>
->>>>>>> 01210ca (Initialize repository)
       </div>
 
       <div class="MapCity-Footer">
@@ -143,7 +106,6 @@ import { convertDatetimeToISO8601Format } from '@/utils/formatDate'
 // import 'leaflet/dist/leaflet.css'
 // import  L from 'leaflet'
 
-<<<<<<< HEAD
 // import axios from 'axios'
 // import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
@@ -156,14 +118,6 @@ import MapCity from '@/data/mapcity.json'
 // いまどきhard-resourcesに気を遣う環境...
 // hardは制限なく使うが基本方向だった...
 // memory,commなどの将来に期待したい
-=======
-// import Data from '@/data/data.json'
-import formatGraph from '@/utils/formatGraph'
-import formatTable from '@/utils/formatTableCity' // yesii
-
-import MapGeojson from '@/data/fukushima_map.geojson.json'
-import MapCity from '@/data/mapcity.json'
->>>>>>> 01210ca (Initialize repository)
 
 export default Vue.extend({
   components: {
@@ -213,10 +167,6 @@ export default Vue.extend({
       this.theData.patients_summary.data[this.theData.patients_summary.data.length - 1].label
     )
     */
-<<<<<<< HEAD
-=======
-
->>>>>>> 01210ca (Initialize repository)
     /* notuse
     const imageurlD = {
         url:    '/images/blue01.png',
@@ -239,12 +189,8 @@ export default Vue.extend({
         minZoom: 2,
         maxZoom: 18,
         // center: [38.475, 140]
-<<<<<<< HEAD
         center: [37.40056, 140.35972],
         pCanvas: true // yesii ??
-=======
-        center: [37.40056, 140.35972]
->>>>>>> 01210ca (Initialize repository)
       },
       customIcon: {
         iconUrl: '/images/blue01.png',
@@ -324,11 +270,7 @@ export default Vue.extend({
 
     // style-color-geoinfo-eventsの追加
     // control that shows state info on hover
-<<<<<<< HEAD
     // this.makeStyle(this.map, this.L, this.marker)
-=======
-    // this.makeStyle(map, L, this.marker)
->>>>>>> 01210ca (Initialize repository)
 
     // add.popup
     // this.makePopup(map, L, this.marker)
@@ -397,19 +339,6 @@ export default Vue.extend({
         : d > 10
         ? '#FED976'
         : '#FFEDA0'
-<<<<<<< HEAD
-=======
-      /*
-		  return d > 85 ? '#800026' :
-              d > 65  ? '#BD0026' :
-              d > 50  ? '#E31A1C' :
-              d > 35  ? '#FC4E2A' :
-              d > 25  ? '#FD8D3C' :
-              d > 15  ? '#FEB24C' :
-              d > 5   ? '#FED976' :
-                        '#FFEDA0';
-*/
->>>>>>> 01210ca (Initialize repository)
     },
     style(feature: any) {
       return {
@@ -424,7 +353,6 @@ export default Vue.extend({
     /*
     makeStyle: function(map: any, L:any) {
     },
-<<<<<<< HEAD
     */
     highlightFeature(e: any) {
       const layer = e.target
@@ -443,25 +371,6 @@ export default Vue.extend({
       // }
     },
 
-=======
-    highlightFeature(e: any) {
-      let layer = e.target;
-      //let info = this.L.control();
-      layer.setStyle({
-          weight: 5,
-          color: '#666',
-          dashArray: '',
-          fillOpacity: 0.7
-      });
-
-      //info.update(layer.feature.properties);
-
-      //if (!this.L.Browser.ie && !this.L.Browser.opera && !this.L.Browser.edge) {
-          layer.bringToFront();
-      //}
-    },
-    */
->>>>>>> 01210ca (Initialize repository)
     resetHighlight(e: any) {
       const layer = e.target
       // let info = this.L.control();
@@ -478,21 +387,14 @@ export default Vue.extend({
     },
     zoomToFeature(e: any) {
       this.map.fitBounds(e.target.getBounds())
-<<<<<<< HEAD
       // this.map.fitBounds(this.Marker.getBounds());
-=======
->>>>>>> 01210ca (Initialize repository)
     },
     /*
     onEachFeature(feature: any, layer: any) {
       layer.on({
           mouseover: this.highlightFeature,
           mouseout: this.resetHighlight,
-<<<<<<< HEAD
           //click: this.zoomToFeature
-=======
-          click: this.zoomToFeature
->>>>>>> 01210ca (Initialize repository)
       });
     },
     */
@@ -607,10 +509,6 @@ export default Vue.extend({
       // (01)
       let idx = 0
       let gCityName = ''
-<<<<<<< HEAD
-=======
-      // this.geojson.onEachFeature = (feature: any, layer: any) => {
->>>>>>> 01210ca (Initialize repository)
       this.geojsonOptions.onEachFeature = (feature: any, layer: any) => {
         // geojsonデータの同一行政区名重複を避ける
         // if (gCityName !== feature.properties.N03_004){
@@ -631,13 +529,8 @@ export default Vue.extend({
         // Event設定
         layer.on({
           mouseover: this.highlightFeature,
-<<<<<<< HEAD
           mouseout: this.resetHighlight
           // click: this.zoomToFeature
-=======
-          mouseout: this.resetHighlight,
-          click: this.zoomToFeature
->>>>>>> 01210ca (Initialize repository)
         })
         // }
       }
