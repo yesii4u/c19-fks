@@ -14,15 +14,18 @@
     />
     <div v-if="dataLoaded">
       <v-row class="DataBlock">
-        <!--  confirmed-cases-attributes-card-map-f :graph-data="Data" /    -->
+        <confirmed-cases-attributes-card-map-f :graph-data="Data" />
         <confirmed-cases-attributes-card-city :graph-data="Data" />
         <not-public-card :graph-data="Data" />
         <confirmed-cases-details-card :graph-data="Data" />
         <confirmed-cases-attributes-card :graph-data="Data" />
+        <!--
+        <confirmed-cases-number-card :graph-data="Data" />
         <confirmed-cases-number-card :graph-data="Data" />
         <tested-number-card :graph-data="Data" />
         <telephone-advisory-reports-number-card :graph-data="Data" />
         <consultation-desk-reports-number-card :graph-data="Data" />
+        -->
       </v-row>
     </div>
   </div>
@@ -37,30 +40,30 @@ import WhatsNew from '@/components/WhatsNew.vue'
 import StaticInfo from '@/components/StaticInfo.vue'
 import Data from '@/data/data.json'
 import News from '@/data/news.json'
-import ConfirmedCasesDetailsCard from '@/components/cards/ConfirmedCasesDetailsCard.vue'
-import ConfirmedCasesNumberCard from '@/components/cards/ConfirmedCasesNumberCard.vue'
-import ConfirmedCasesAttributesCard from '@/components/cards/ConfirmedCasesAttributesCard.vue'
-/// import ConfirmedCasesAttributesCardMapF from '@/components/cards/ConfirmedCasesAttributesCardMapF.vue'
+import ConfirmedCasesAttributesCardMapF from '@/components/cards/ConfirmedCasesAttributesCardMapF.vue'
 import ConfirmedCasesAttributesCardCity from '@/components/cards/ConfirmedCasesAttributesCardCity.vue'
 import NotPublicCard from '@/components/cards/NotPublicCard.vue'
-import TestedNumberCard from '@/components/cards/TestedNumberCard.vue'
-import TelephoneAdvisoryReportsNumberCard from '@/components/cards/TelephoneAdvisoryReportsNumberCard.vue'
-import ConsultationDeskReportsNumberCard from '@/components/cards/ConsultationDeskReportsNumberCard.vue'
+import ConfirmedCasesDetailsCard from '@/components/cards/ConfirmedCasesDetailsCard.vue'
+import ConfirmedCasesAttributesCard from '@/components/cards/ConfirmedCasesAttributesCard.vue'
+//import ConfirmedCasesNumberCard from '@/components/cards/ConfirmedCasesNumberCard.vue'
+//import TestedNumberCard from '@/components/cards/TestedNumberCard.vue'
+//import TelephoneAdvisoryReportsNumberCard from '@/components/cards/TelephoneAdvisoryReportsNumberCard.vue'
+//import ConsultationDeskReportsNumberCard from '@/components/cards/ConsultationDeskReportsNumberCard.vue'
 
 export default Vue.extend({
   components: {
     PageHeader,
     WhatsNew,
     StaticInfo,
-    ConfirmedCasesDetailsCard,
-    ConfirmedCasesNumberCard,
-    ConfirmedCasesAttributesCard,
-    // ConfirmedCasesAttributesCardMapF,
+    ConfirmedCasesAttributesCardMapF,
     ConfirmedCasesAttributesCardCity,
     NotPublicCard,
-    TelephoneAdvisoryReportsNumberCard,
-    ConsultationDeskReportsNumberCard,
-    TestedNumberCard
+    ConfirmedCasesDetailsCard,
+    ConfirmedCasesAttributesCard,
+    //ConfirmedCasesNumberCard,
+    //TelephoneAdvisoryReportsNumberCard,
+    //ConsultationDeskReportsNumberCard,
+    //TestedNumberCard
   },
   data() {
     const data = {

@@ -107,17 +107,15 @@ import { convertDatetimeToISO8601Format } from '@/utils/formatDate'
 // import  L from 'leaflet'
 
 // import axios from 'axios'
-// import Data from '@/data/data.json'
+//  import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 import MapGeojson from '@/data/fukushima_map.geojson.json'
 import MapCity from '@/data/mapcity.json'
 // mapgeojsonは重い。
-// mainから呼ぶのは...しかし基本動機と将来展開では必要。
 // async()にしてもこのステージではimportと大差ない...
 // いまどきhard-resourcesに気を遣う環境...
-// hardは制限なく使うが基本方向だった...
-// memory,commなどの将来に期待したい
+// JHは細部をverlayしているのか？
 
 export default Vue.extend({
   components: {
