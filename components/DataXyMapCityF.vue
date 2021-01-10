@@ -76,17 +76,17 @@
             <h4>{{ $t('その他未分類') }}</h4>
             <table class="MapCity-Table-Style">
               <!--tr>
-            <th>区分</th>
-            <th>陽性者数</th>
-          </tr  -->
+                <th>区分</th>
+                <th>陽性者数</th>
+              </tr  -->
               <tr>
                 <td>{{ $t('県外') }}</td>
                 <td>{{ totalPerson }}人</td>
               </tr>
               <!--tr v-for="(value, key) in remainderData" :key="key">
-            <td>{{ value.name }}</td>
-            <td>{{ value.personCount }}人</td>
-          </tr    -->
+                <td>{{ value.name }}</td>
+                <td>{{ value.personCount }}人</td>
+              </tr    -->
             </table>
           </div>
         </div>
@@ -107,7 +107,7 @@ import { convertDatetimeToISO8601Format } from '@/utils/formatDate'
 // import  L from 'leaflet'
 
 // import axios from 'axios'
-//  import Data from '@/data/data.json'
+// import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 import MapGeojson from '@/data/fukushima_map.geojson.json'
@@ -422,12 +422,10 @@ export default Vue.extend({
       return 1
     },
     setInfectionPersonCountData() {
-      let gmaxInfectionPersonCount = 0
-
       // データの取得
       this.getInfectionPersonCount()
       // const infectionPersonCount = this.getInfectionPersonCount()
-      gmaxInfectionPersonCount = 0
+      let gmaxInfectionPersonCount = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
         row['居住地'] = this.$t(row['居住地'])
@@ -448,13 +446,14 @@ export default Vue.extend({
       let gCityName = ''
       this.geojsonOptions.onEachFeature = (feature: any, layer: any) => {
         // geojsonデータの同一行政区名重複を避ける
-        // if (gCityName != feature.properties.N03_004){
+        // if (gCityName !== feature.properties.N03_004){
         // gCityName = feature.properties.N03_004
         layer.bindPopup(
           `<h4>${
             feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
           }
             ${feature.properties.N03_004}</h4><h5>陽性者: ${
+            // (idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
             (idx = this.patientsTable.datasets.findIndex(
               (v: any) => v.居住地 === feature.properties.N03_004
             )) >= 0
@@ -544,7 +543,7 @@ export default Vue.extend({
         // for next-step
         // idx=0     //findindex
         gCityName = feature.properties.N03_004
-        // if (gCityName != feature.properties.N03_004){
+        // if (gCityName !== feature.properties.N03_004){
         let thePersonCount = 0
         if (
           (idx = this.patientsTable.datasets.findIndex(

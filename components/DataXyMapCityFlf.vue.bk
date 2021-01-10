@@ -1,58 +1,58 @@
 <template>
   <div class="MapCity">
     <div class="MapCity-Inner">
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    />
-    <div class="MapCity-Header">
-      <span class="MapCity-Title">
-        {{ $t('陽性者属性(直近6週間)') }}
-      </span>
-      <span class="MapCity-DataInfo">
-        <span class="MapCity-DataInfo-summary">
-          <small class="MapCity-DataInfo-summary-date"
-            >{{ lastUpdate }}{{ $t('の累計') }}</small
-          >
-          <small class="MapCity-DataInfo-summary-unit"
-            >{{ info.lText }}{{ $t('人') }}</small
-          >
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      />
+      <div class="MapCity-Header">
+        <span class="MapCity-Title">
+          {{ $t('陽性者属性(直近6週間)') }}
         </span>
-      </span>
-    </div>
-
-    <!--no-ssr    -->
-    <div id="mapapp" class="MapCity-Map"></div>
-    <!--/no-ssr   -->
-
-    <div class="MapCity-Footer">
-      <div class="Footer-Left">
-      <div>
-        <a class="Permalink" :href="permalink()">
-          <time :datetime="formattedDate">
-            {{ $t('{dateD} 更新', { dateD }) }}
-          </time>
-        </a>
+        <span class="MapCity-DataInfo">
+          <span class="MapCity-DataInfo-summary">
+            <small class="MapCity-DataInfo-summary-date"
+              >{{ lastUpdate }}{{ $t('の累計') }}</small
+            >
+            <small class="MapCity-DataInfo-summary-unit"
+              >{{ info.lText }}{{ $t('人') }}</small
+            >
+          </span>
+        </span>
       </div>
-      <div class="MapCity-Table">
-        <h4>{{ $t('その他未分類') }}</h4>
-        <table class="MapCity-Table-Style">
-          <!--tr>
-            <th>区分</th>
-            <th>陽性者数</th>
-          </tr  -->
-          <tr>
-            <td>{{ $t('県外') }}</td>
-            <td>{{ totalPerson }}人</td>
-          </tr>
-          <!--tr v-for="(value, key) in remainderData" :key="key">
-            <td>{{ value.name }}</td>
-            <td>{{ value.personCount }}人</td>
-          </tr    -->
-        </table>
+
+      <!--no-ssr    -->
+      <div id="mapapp" class="MapCity-Map"></div>
+      <!--/no-ssr   -->
+
+      <div class="MapCity-Footer">
+        <div class="Footer-Left">
+          <div>
+            <a class="Permalink" :href="permalink()">
+              <time :datetime="formattedDate">
+                {{ $t('{dateD} 更新', { dateD }) }}
+              </time>
+            </a>
+          </div>
+          <div class="MapCity-Table">
+            <h4>{{ $t('その他未分類') }}</h4>
+            <table class="MapCity-Table-Style">
+              <!--tr>
+                <th>区分</th>
+                <th>陽性者数</th>
+              </tr  -->
+              <tr>
+                <td>{{ $t('県外') }}</td>
+                <td>{{ totalPerson }}人</td>
+              </tr>
+              <!--tr v-for="(value, key) in remainderData" :key="key">
+                <td>{{ value.name }}</td>
+                <td>{{ value.personCount }}人</td>
+              </tr    -->
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </div>
   </div>
 </template>
@@ -334,6 +334,7 @@ export default Vue.extend({
     },
     highlightFeature: function(e: any) {
       const layer = e.target
+      // let info = this.L.control();
       layer.setStyle({
         weight: 5,
         color: '#666',
@@ -454,7 +455,7 @@ export default Vue.extend({
     getInfectionPersonCount() {
       let dataDate = '01/10'
       let mapCityNameDate = '01/10'
-      //let theYYYY = ''    //'2020'
+      // let theYYYY = ''    //'2020'
       this.totalPersons = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
@@ -462,16 +463,16 @@ export default Vue.extend({
         row['累計'] = this.$t(row['累計'])
         this.totalPersons += Number(row['累計'])
 
-        mapCityNameDate = row['公表日'] 
+        mapCityNameDate = row['公表日']
         if (dayjs(dataDate).isAfter(dayjs(mapCityNameDate))){
-            this.lastUpdate = dataDate
+          this.lastUpdate = dataDate
         }else{
-            this.lastUpdate = mapCityNameDate
-            dataDate = mapCityNameDate
+          this.lastUpdate = mapCityNameDate
+          dataDate = mapCityNameDate
         }
       }
-      //this.lastUpdate = theYYYY + this.lastUpdate
-      //this.lastUpdate = this.lastUpdate
+      // this.lastUpdate = theYYYY + this.lastUpdate
+      // this.lastUpdate = this.lastUpdate
       return 1
     },
     setInfectionPersonCountData() {
@@ -509,7 +510,7 @@ export default Vue.extend({
               feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
             }
             ${feature.properties.N03_004}</h4><h5>陽性者: ${
-            //(idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
+              //(idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
               (idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0
                 ? `${this.patientsTable.datasets[idx].累計}人`
                 : 'なし'
@@ -535,16 +536,16 @@ export default Vue.extend({
         // marker設定
         // 重複はしない
         if (this.gCityName != feature.properties.N03_004){
-          //for next-step
-          //gCityName = feature.properties.N03_004
+          // for next-step
+          // gCityName = feature.properties.N03_004
 
-          //popup-contents
+          // popup-contents
           let item=''   //contents
           let item2=0   //pesons-count
           let idx=0     //findindex
           let lat1=''
           let lng1=''
-          //地図の地名が陽性者居住地に出現するか
+          // 地図の地名が陽性者居住地に出現するか
           if ((idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0){
             item= feature.properties.N03_004+' :\n '+this.patientsTable.datasets[idx].累計 + '人'
             item2=this.patientsTable.datasets[idx].累計
@@ -553,7 +554,7 @@ export default Vue.extend({
             item2=0
           }
           if (item2 > 0){   //popupあり
-            //陽性者居住地が[mapcenter:行政施設名]に存在するか
+            // 陽性者居住地が[mapcenter:行政施設名]に存在するか
             if ( (idx = this.markercenter.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0 ){
                 lat1=this.markercenter[idx].緯度
                 lng1=this.markercenter[idx].経度
@@ -561,7 +562,7 @@ export default Vue.extend({
                 lat1=feature.geometry.coordinates[0][0][1]     //緯度
                 lng1=feature.geometry.coordinates[0][0][0]     //経度
             }
-            //県外陽性者は地図のfeatureに出現しないので無視される
+            // 県外陽性者は地図のfeatureに出現しないので無視される
 
             // popupmarker-add
             this.marker.push({
@@ -581,7 +582,7 @@ export default Vue.extend({
         // for next-step
         let idx=0     //findindex
         this.gCityName = feature.properties.N03_004
-        //if (gCityName != feature.properties.N03_004){
+        // if (gCityName != feature.properties.N03_004){
         let thePersonCount=0;
         if ((idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0){
           thePersonCount=Number(this.patientsTable.datasets[idx].累計)
@@ -599,7 +600,6 @@ export default Vue.extend({
           dashArray: '',
           fillOpacity: 0.8
         }
-      
     },
     getColorF(
       thePersonCount: number,
@@ -615,7 +615,6 @@ export default Vue.extend({
         rPercentData = 0
       }
       return(this.getColor(rPercentData));
-
     },
 
     makePopup(map: any, L: any, marker: any){
