@@ -22,7 +22,7 @@
       </div>
 
       <!--no-ssr    -->
-      <div id="mapapp" class="MapCity-Map"></div>
+      <div id="mapapp" class="MapCity-Map" />
       <!--/no-ssr   -->
 
       <div class="MapCity-Footer">
@@ -73,7 +73,6 @@ import 'leaflet/dist/leaflet.css'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 import MapGeojson from '@/data/fukushima_map.geojson.json'
-//import MapGeojson from '@/data/us-states.json'
 import MapCity from '@/data/mapcity.json'
 // mapgeojsonは重い。
 // async()にしてもこのステージではimportと大差ない...
@@ -113,26 +112,6 @@ export default Vue.extend({
       default: ''
     }
   },
-    computed: {
-    formattedDate(): string {
-      return convertDatetimeToISO8601Format(this.date)
-    },
-    totalPerson() {
-      let totalPerson = 0
-      for (let i = 0; i < this.remainderData.length; i++) {
-        totalPerson += this.remainderData[i].personCount
-      }
-      return totalPerson
-    },
-    dynamicSize(): any {
-      // return ([this.iSize, this.iSize * 1.6]);
-      return [50, 75]
-    },
-    dynamicAnchor(): any {
-      return [this.iSize / 2, this.iSize * 1.15]
-      // return ([0, 0]);
-    }
-  },
   data() {
     // object copy
     const theDataD = {}
@@ -168,7 +147,7 @@ export default Vue.extend({
         zoom: 9,
         minZoom: 2,
         maxZoom: 18,
-        center: [37.40056, 140.35972],
+        center: [37.40056, 140.35972]
         // pCanvas: true // yesii ??
       },
       customIcon: {
@@ -200,31 +179,51 @@ export default Vue.extend({
     return dataObject
     // dateD: lad
   },
+  computed: {
+    formattedDate(): string {
+      return convertDatetimeToISO8601Format(this.date)
+    },
+    totalPerson() {
+      let totalPerson = 0
+      for (let i = 0; i < this.remainderData.length; i++) {
+        totalPerson += this.remainderData[i].personCount
+      }
+      return totalPerson
+    },
+    dynamicSize(): any {
+      // return ([this.iSize, this.iSize * 1.6]);
+      return [50, 75]
+    },
+    dynamicAnchor(): any {
+      return [this.iSize / 2, this.iSize * 1.15]
+      // return ([0, 0]);
+    }
+  },
   mounted() {
     // if (process.client) {
     // データの準備
-    //require('leaflet/dist/leaflet.css');
-    let L = require('leaflet');
+    // require('leaflet/dist/leaflet.css');
+    const L = require('leaflet')
 
     // <l-map
     // add.map: centerを中心にマップ描写
-    //let mpoint = [items[mcenter].緯度,items[mcenter].経度];
-    let map = L.map('mapapp', {
-        zoom: this.mapOptions.zoom,
-        minZoom: this.mapOptions.minZoom,
-        maxZoom: this.mapOptions.maxZoom,
-        center: this.mapOptions.center
-    });
+    // let mpoint = [items[mcenter].緯度,items[mcenter].経度];
+    const map = L.map('mapapp', {
+      zoom: this.mapOptions.zoom,
+      minZoom: this.mapOptions.minZoom,
+      maxZoom: this.mapOptions.maxZoom,
+      center: this.mapOptions.center
+    })
 
     // <l-tile-layer
     // add.tile: 地理院タイル：淡色
-    let tileLayer = L.tileLayer(this.tile.url, {
-        attribution: this.tile.attribution,
-        zoom: this.mapOptions.zoom,
-        minZoom: this.mapOptions.minZoom,
-        maxZoom: this.mapOptions.maxZoom,
-    });
-    tileLayer.addTo(map);
+    const tileLayer = L.tileLayer(this.tile.url, {
+      attribution: this.tile.attribution,
+      zoom: this.mapOptions.zoom,
+      minZoom: this.mapOptions.minZoom,
+      maxZoom: this.mapOptions.maxZoom
+    })
+    tileLayer.addTo(map)
 
     // object copy
     // this.theDataD ={}
@@ -245,29 +244,29 @@ export default Vue.extend({
       row['累計'] = this.$t(row['累計'])
     }
 
-    let gCityName=''
-    let gidx=0;
-    let gmaxInfectionPersonCount=0
-    //let theinfo;
+    // let theinfo;
     // <l-marker
     // Geoデータの準備
+    const gCityName = ''
+    const gmaxInfectionPersonCount = 0
     this.lastUpdate = this.getLastUpdate()
-    this.setInfectionPersonCountData()
+    this.setInfectionPersonCountData(gmaxInfectionPersonCount)
 
     // Geoデータの作図
     // <l-geo-json
     // add.geoJson
     // add.style-Events
-    //let geojsonLayer = L.geoJson(this.geojson, {    //returnはlayerである
-    L.geoJson(this.geojson, {    //returnはlayerである
-      style: this.style,
+    // let geojsonLayer = L.geoJson(this.geojson, {    //returnはlayerである
+    L.geoJson(this.geojson, {
+      // returnはlayerである
+      style: this.style(gCityName),
       onEachFeature: this.onEachFeature
-    }).addTo(map);
-    //map.fitBounds(geojsonL1.getBounds());       //zoomに相反
+    }).addTo(map)
+    // map.fitBounds(geojsonL1.getBounds());       //zoomに相反
 
     // add.Legend
-    //this.makeLabel(map, L);
-    this.makeLegend(map, L);
+    // this.makeLabel(map, L);
+    this.makeLegend(map, L)
 
     // <l-popup
     // add.popup
@@ -275,19 +274,18 @@ export default Vue.extend({
 
     // <l-circle
     // add.circle
-
   },
   methods: {
-    toggleShareMenu: function() {
+    toggleShareMenu() {
       this.displayShare = !this.displayShare
     },
-    closeShareMenu: function() {
+    closeShareMenu() {
       this.displayShare = false
     },
-    isCopyAvailable: function() {
+    isCopyAvailable() {
       return !!navigator.clipboard
     },
-    copyEmbedCode: function() {
+    copyEmbedCode() {
       const self = this
       navigator.clipboard.writeText(this.graphEmbedValue).then(() => {
         self.closeShareMenu()
@@ -298,7 +296,7 @@ export default Vue.extend({
         }, 2000)
       })
     },
-    copyImageCode: function() {
+    copyImageCode() {
       const self = this
       navigator.clipboard.writeText(this.graphImageValue).then(() => {
         self.closeShareMenu()
@@ -309,7 +307,7 @@ export default Vue.extend({
         }, 2000)
       })
     },
-    permalink: function(host: boolean = false, embed: boolean = false) {
+    permalink(host: boolean = false, embed: boolean = false) {
       let permalink = '/cards/' + this.titleId
       if (embed) {
         permalink = permalink + '?embed=true'
@@ -322,17 +320,24 @@ export default Vue.extend({
       return permalink
     },
 
-    getColor: function(d: number) {
-        return d > 85 ? '#800026' :
-              d > 75  ? '#BD0026' :
-              d > 65  ? '#E31A1C' :
-              d > 50  ? '#FC4E2A' :
-              d > 35  ? '#FD8D3C' :
-              d > 20  ? '#FEB24C' :
-              d > 10  ? '#FED976' :
-                        '#FFEDA0';
+    getColor(d: number) {
+      return d > 85
+        ? '#800026'
+        : d > 75
+        ? '#BD0026'
+        : d > 65
+        ? '#E31A1C'
+        : d > 50
+        ? '#FC4E2A'
+        : d > 35
+        ? '#FD8D3C'
+        : d > 20
+        ? '#FEB24C'
+        : d > 10
+        ? '#FED976'
+        : '#FFEDA0'
     },
-    highlightFeature: function(e: any) {
+    highlightFeature(e: any) {
       const layer = e.target
       // let info = this.L.control();
       layer.setStyle({
@@ -340,15 +345,15 @@ export default Vue.extend({
         color: '#666',
         dashArray: '',
         fillOpacity: 0.7
-      });
+      })
 
-      //this.theinfo.update(layer.feature.properties);
-      //if (!this.L.Browser.ie && !this.L.Browser.opera) {
-        layer.bringToFront();
-      //}
+      // this.theinfo.update(layer.feature.properties);
+      // if (!this.L.Browser.ie && !this.L.Browser.opera) {
+      layer.bringToFront()
+      // }
     },
-    resetHighlight: function(e: any) {
-      let layer = e.target;
+    resetHighlight(e: any) {
+      const layer = e.target
       // let info = this.L.control();
       layer.setStyle({
         weight: 2,
@@ -356,15 +361,18 @@ export default Vue.extend({
         color: 'white',
         dashArray: '3',
         fillOpacity: 0.7
-      });
+      })
 
-      //this.theinfo.update();
-      //this.geojsonLayer.resetStyle(e.target);
+      // this.theinfo.update();
+      // this.geojsonLayer.resetStyle(e.target);
     },
+    /*
     zoomToFeature: function(e: any) {
       let layer = e.target;
         //this.map.fitBounds(e.target.getBounds());
     },
+    */
+    /*
     onEachFeatureEv: function(feature: any, layer: any) {
       layer.on({
           mouseover: this.highlightFeature,
@@ -372,17 +380,27 @@ export default Vue.extend({
           click: this.zoomToFeature
       });
     },
-    makeLegend: function(map:any, L:any){
-        const legend = L.control({ position: 'bottomright' });
+    */
+    makeLegend(map: any, L: any) {
+      const legend = L.control({ position: 'bottomright' })
 
-        legend.onAdd = (map: any) => {
-        let div = L.DomUtil.create('div', 'legend'),
-          grades = [0, 10, 20, 35, 50, 65, 75, 85],
-          //labels = [],
-          //from, to;
-          labels = ["0-10 %", "10-20", "20-35", "35-50", "50-65", "65-75", "75-85", "85% >" ]
+      legend.onAdd = () => {
+        const div = L.DomUtil.create('div', 'legend')
+        const grades = [0, 10, 20, 35, 50, 65, 75, 85]
+        // labels = [],
+        // from, to;
+        const labels = [
+          '0-10 %',
+          '10-20',
+          '20-35',
+          '35-50',
+          '50-65',
+          '65-75',
+          '75-85',
+          '85% >'
+        ]
 
-          /*
+        /*
           for (let i = 0; i < grades.length; i++) {
             from = grades[i];
             to = grades[i + 1];
@@ -394,41 +412,48 @@ export default Vue.extend({
           div.innerHTML = labels.join('<br>');
           */
 
-          div.innerHTML = '<div><b>人数比</b></div>'
-          for (let i = 0; i < grades.length; i++) {
-              div.innerHTML += '<i style="background:' + this.getColor(grades[i]) + '">&nbsp;&nbsp;</i>&nbsp;&nbsp; ' +
-              labels[i] + '</br>';
-          }
-          return div;
-        };
-        legend.addTo(map);
-
+        div.innerHTML = '<div><b>人数比</b></div>'
+        for (let i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+            '<i style="background:' +
+            this.getColor(grades[i]) +
+            '">&nbsp;&nbsp;</i>&nbsp;&nbsp; ' +
+            labels[i] +
+            '</br>'
+        }
+        return div
+      }
+      legend.addTo(map)
     },
-    makeLabel: function(map: any, L:any){
+    makeLabel(map: any, L: any) {
       // control that shows state info on hover
-      let info = L.control();
-      //this.theinfo = info;
+      const info = L.control()
+      // this.theinfo = info;
 
       // here you want the reference to be info, therefore this = info
       // so do not use es6 to access the the class instance
-      let _div = L.DomUtil.create('div', 'info');
-      info.onAdd = function (map: any) {
-        //this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return _div;
-      };
+      const _div = L.DomUtil.create('div', 'info')
+      info.onAdd = function() {
+        // this._div = L.DomUtil.create('div', 'info');
+        this.update()
+        return _div
+      }
 
       // also here you want the reference to be info, therefore this = info
       // so do not use es6 to access the class instance
-      info.update = function (props: any) {
-        _div.innerHTML = '<h4>US Population Density</h4>' +
-        (props
-          ? '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
-          : 'Hover over a state'
-        );
-      };
-      //_div.innerHTML += '<br>'
-      info.addTo(map);
+      info.update = function(props: any) {
+        _div.innerHTML =
+          '<h4>US Population Density</h4>' +
+          (props
+            ? '<b>' +
+              props.name +
+              '</b><br />' +
+              props.density +
+              ' people / mi<sup>2</sup>'
+            : 'Hover over a state')
+      }
+      // _div.innerHTML += '<br>'
+      info.addTo(map)
 
       /*
       const self = this;    //yesii
@@ -450,7 +475,7 @@ export default Vue.extend({
         unit: this.$t('人')
       }
 
-      return ('2020/01/10')
+      return '2020/01/10'
     },
     getInfectionPersonCount() {
       let dataDate = '01/10'
@@ -464,9 +489,9 @@ export default Vue.extend({
         this.totalPersons += Number(row['累計'])
 
         mapCityNameDate = row['公表日']
-        if (dayjs(dataDate).isAfter(dayjs(mapCityNameDate))){
+        if (dayjs(dataDate).isAfter(dayjs(mapCityNameDate))) {
           this.lastUpdate = dataDate
-        }else{
+        } else {
           this.lastUpdate = mapCityNameDate
           dataDate = mapCityNameDate
         }
@@ -475,131 +500,140 @@ export default Vue.extend({
       // this.lastUpdate = this.lastUpdate
       return 1
     },
-    setInfectionPersonCountData() {
+    setInfectionPersonCountData(gmaxInfectionPersonCount: number) {
       // データの取得
       this.getInfectionPersonCount()
-      //const infectionPersonCount = this.getInfectionPersonCount()
-      this.gmaxInfectionPersonCount = 0
+      gmaxInfectionPersonCount = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
         row['居住地'] = this.$t(row['居住地'])
         row['累計'] = this.$t(row['累計'])
 
-        if (this.gmaxInfectionPersonCount < Number(row['累計'])) {
-          this.gmaxInfectionPersonCount = Number(row['累計'])
+        if (gmaxInfectionPersonCount < Number(row['累計'])) {
+          gmaxInfectionPersonCount = Number(row['累計'])
         }
         this.remainderData.push({
           name: row['居住地'],
           personCount: Number(row['累計'])
         })
       }
-
-      return;
     },
-    onEachFeature: function(feature: any, layer: any){
+    onEachFeature(feature: any, layer: any) {
       // 地図にデータを設定する:popup
-      //(01)
-      let idx=0
-      //let gCityName=''
+      // (01)
+      let idx = 0
 
-        //geojsonデータの同一行政区名重複を避ける
-        //if (gCityName != feature.properties.N03_004){
-          //gCityName = feature.properties.N03_004
-          layer.bindPopup(
-            `<h4>${
-              feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
-            }
-            ${feature.properties.N03_004}</h4><h5>陽性者: ${
-              //(idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
-              (idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0
-                ? `${this.patientsTable.datasets[idx].累計}人`
-                : 'なし'
-            }</h5>`
-          )
+      // geojsonデータの同一行政区名重複を避ける
+      layer.bindPopup(
+        `<h4>${
+          feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
+        }
+        ${feature.properties.N03_004}</h4><h5>陽性者: ${
+          // (idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
+          (idx = this.patientsTable.datasets.findIndex(
+            (v: any) => v.居住地 === feature.properties.N03_004
+          )) >= 0
+            ? `${this.patientsTable.datasets[idx].累計}人`
+            : 'なし'
+        }</h5>`
+      )
 
-        // Event設定
-        layer.on({
-          mouseover: this.highlightFeature,
-          mouseout: this.resetHighlight,
-          click: this.zoomToFeature
-        })
-        //  }
+      // Event設定
+      layer.on({
+        mouseover: this.highlightFeature,
+        mouseout: this.resetHighlight
+        // click: this.zoomToFeature
+      })
     },
-    style: function(feature: any){
-        //remainderData調整
-        this.remainderData = this.remainderData.filter(
-          (data: any) => data.name != feature.properties.N03_004
-        )
+    style(feature: any, gCityName: string) {
+      // remainderData調整
+      this.remainderData = this.remainderData.filter(
+        (data: any) => data.name !== feature.properties.N03_004
+      )
 
-        // 地図にデータを設定する:style
-        //(02)
-        // marker設定
-        // 重複はしない
-        if (this.gCityName != feature.properties.N03_004){
-          // for next-step
-          // gCityName = feature.properties.N03_004
-
-          // popup-contents
-          let item=''   //contents
-          let item2=0   //pesons-count
-          let idx=0     //findindex
-          let lat1=''
-          let lng1=''
-          // 地図の地名が陽性者居住地に出現するか
-          if ((idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0){
-            item= feature.properties.N03_004+' :\n '+this.patientsTable.datasets[idx].累計 + '人'
-            item2=this.patientsTable.datasets[idx].累計
-          }else{
-            item=feature.properties.N03_004+' :\n '+'なし'
-            item2=0
+      // 地図にデータを設定する:style
+      // (02)
+      // marker設定
+      // 重複はしない
+      if (gCityName !== feature.properties.N03_004) {
+        // popup-contents
+        let item = '' // contents
+        let item2 = 0 // pesons-count
+        let idx = 0 // findindex
+        let lat1 = ''
+        let lng1 = ''
+        // 地図の地名が陽性者居住地に出現するか
+        if (
+          (idx = this.patientsTable.datasets.findIndex(
+            (v: any) => v.居住地 === feature.properties.N03_004
+          )) >= 0
+        ) {
+          item =
+            feature.properties.N03_004 +
+            ' :\n ' +
+            this.patientsTable.datasets[idx].累計 +
+            '人'
+          item2 = this.patientsTable.datasets[idx].累計
+        } else {
+          item = feature.properties.N03_004 + ' :\n ' + 'なし'
+          item2 = 0
+        }
+        if (item2 > 0) {
+          // popupあり
+          // 陽性者居住地が[mapcenter:行政施設名]に存在するか
+          if (
+            (idx = this.markercenter.findIndex(
+              (v: any) => v.居住地 === feature.properties.N03_004
+            )) >= 0
+          ) {
+            lat1 = this.markercenter[idx].緯度
+            lng1 = this.markercenter[idx].経度
+          } else {
+            // 陽性者なし or行政施設名に不一致
+            lat1 = feature.geometry.coordinates[0][0][1] // 緯度
+            lng1 = feature.geometry.coordinates[0][0][0] // 経度
           }
-          if (item2 > 0){   //popupあり
-            // 陽性者居住地が[mapcenter:行政施設名]に存在するか
-            if ( (idx = this.markercenter.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0 ){
-                lat1=this.markercenter[idx].緯度
-                lng1=this.markercenter[idx].経度
-            }else{//陽性者なし or行政施設名に不一致
-                lat1=feature.geometry.coordinates[0][0][1]     //緯度
-                lng1=feature.geometry.coordinates[0][0][0]     //経度
-            }
-            // 県外陽性者は地図のfeatureに出現しないので無視される
+          // 県外陽性者は地図のfeatureに出現しないので無視される
 
-            // popupmarker-add
-            this.marker.push({
-              name: feature.properties.N03_004,
-              lat: lat1,     //緯度
-              lng: lng1,     //経度
-              contents: item,
-              count: item2
-              // patients: this.patientsTable.datasets[idx].累計 + '人'
-            })
-          }
+          // popupmarker-add
+          this.marker.push({
+            name: feature.properties.N03_004,
+            lat: lat1, // 緯度
+            lng: lng1, // 経度
+            contents: item,
+            count: item2
+            // patients: this.patientsTable.datasets[idx].累計 + '人'
+          })
         }
-        // this.layer.bindPopup(feature.properties.popupContent);
+      }
+      // this.layer.bindPopup(feature.properties.popupContent);
 
-        // colorの設定
-        // (03)
-        // for next-step
-        let idx=0     //findindex
-        this.gCityName = feature.properties.N03_004
-        // if (gCityName != feature.properties.N03_004){
-        let thePersonCount=0;
-        if ((idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === feature.properties.N03_004) )>=0){
-          thePersonCount=Number(this.patientsTable.datasets[idx].累計)
-        }
+      // colorの設定
+      // (03)
+      // for next-step
+      let idx = 0 // findindex
+      gCityName = feature.properties.N03_004
+      let thePersonCount = 0
+      if (
+        (idx = this.patientsTable.datasets.findIndex(
+          (v: any) => v.居住地 === feature.properties.N03_004
+        )) >= 0
+      ) {
+        thePersonCount = Number(this.patientsTable.datasets[idx].累計)
+      }
 
-        return {
-          fillColor: this.getColorF(
-            thePersonCount,
-            feature.properties.N03_004,
-            this.gmaxInfectionPersonCount
-          ),
-          weight: 0.4,
-          opacity: 1,
-          color: 'white',
-          dashArray: '',
-          fillOpacity: 0.8
-        }
+      return {
+        fillColor: this.getColorF(
+          thePersonCount,
+          feature.properties.N03_004,
+          this.gmaxInfectionPersonCount
+        ),
+        weight: 0.4,
+        opacity: 1,
+        color: 'white',
+        dashArray: '',
+        fillOpacity: 0.8
+      }
     },
     getColorF(
       thePersonCount: number,
@@ -608,27 +642,33 @@ export default Vue.extend({
     ) {
       // let idx=0;
       let rPercentData = 0
-      if ( this.patientsTable.datasets.findIndex( (v: any) => v.居住地 === cityName ) >= 0) {
+      if (
+        this.patientsTable.datasets.findIndex(
+          (v: any) => v.居住地 === cityName
+        ) >= 0
+      ) {
         // if ( (idx = this.patientsTable.datasets.findIndex((v: any) => v.居住地 === cityName) )>=0 ){
-        rPercentData = Math.round((thePersonCount / gmaxInfectionPersonCount) * 100)
+        rPercentData = Math.round(
+          (thePersonCount / gmaxInfectionPersonCount) * 100
+        )
       } else {
         rPercentData = 0
       }
-      return(this.getColor(rPercentData));
+      return this.getColor(rPercentData)
     },
 
-    makePopup(map: any, L: any, marker: any){
-      //for(let i=0; i<this.marker.length; i++) {
-      //for (const row of this.patientsTable.datasets) {
+    makePopup(map: any, L: any, marker: any) {
+      // for(let i=0; i<this.marker.length; i++) {
+      // for (const row of this.patientsTable.datasets) {
       for (const rowMarker of marker) {
-        let markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map);
-        //L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
-        markerP.bindPopup(rowMarker.contents).addTo(map);
-        let circle = L.circle([rowMarker.lat, rowMarker.lng], {
-              radius: this.markerbase * rowMarker.count,
-              color: this.markercolor,
-              weight: this.weight
-              /*
+        const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
+        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
+        markerP.bindPopup(rowMarker.contents).addTo(map)
+        L.circle([rowMarker.lat, rowMarker.lng], {
+          radius: this.markerbase * rowMarker.count,
+          color: this.markercolor,
+          weight: this.weight
+          /*
               color: this.markercolor,
               weight: this.weight,
               opacity: 0.8,
@@ -636,15 +676,14 @@ export default Vue.extend({
               fillOpacity: 0.3,
               radius: this.markerbase * this.marker.count
               */
-        }).addTo(map);
+        }).addTo(map)
       }
-    },
+    }
   },
   head: (): MetaInfo => ({
     title: '陽性者属性(直近6週間)'
   })
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -904,16 +943,15 @@ export default Vue.extend({
 */
 
 .legend {
-    background-color: white;
-    line-height: 18px;
-    color: #555;
+  background-color: white;
+  line-height: 18px;
+  color: #555;
 }
 .legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
 }
-
 </style>

@@ -261,7 +261,6 @@ export default Vue.extend({
 
     // Geoデータの準備
     // let theinfo;
-    // let gmaxInfectionPersonCount=0
     this.lastUpdate = this.getLastUpdate()
     this.setInfectionPersonCountData()
 
@@ -361,7 +360,7 @@ export default Vue.extend({
       })
 
       // this.theinfo.update(layer.feature.properties);
-      // if (!this.L.Browser.ie && !this.L.Browser.opera && !this.L.Browser.edge) {
+      // if (!this.L.Browser.ie && !this.L.Browser.opera) {
       layer.bringToFront()
       // }
     },
@@ -424,7 +423,6 @@ export default Vue.extend({
     setInfectionPersonCountData() {
       // データの取得
       this.getInfectionPersonCount()
-      // const infectionPersonCount = this.getInfectionPersonCount()
       let gmaxInfectionPersonCount = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
@@ -446,7 +444,7 @@ export default Vue.extend({
       let gCityName = ''
       this.geojsonOptions.onEachFeature = (feature: any, layer: any) => {
         // geojsonデータの同一行政区名重複を避ける
-        // if (gCityName !== feature.properties.N03_004){
+        // if (gCityName != feature.properties.N03_004){
         // gCityName = feature.properties.N03_004
         layer.bindPopup(
           `<h4>${
