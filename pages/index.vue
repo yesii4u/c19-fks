@@ -19,10 +19,9 @@
         <not-public-card :graph-data="Data" />
         <confirmed-cases-details-card :graph-data="Data" />
         <confirmed-cases-attributes-card :graph-data="Data" />
-        <!--
+        <!-- 
         <confirmed-cases-number-card :graph-data="Data" />
-        <confirmed-cases-number-card :graph-data="Data" />
-        <tested-number-card :graph-data="Data" />
+        <tested-number-card :graph-data="Data" />   
         <telephone-advisory-reports-number-card :graph-data="Data" />
         <consultation-desk-reports-number-card :graph-data="Data" />
         -->
@@ -45,10 +44,10 @@ import ConfirmedCasesAttributesCardCity from '@/components/cards/ConfirmedCasesA
 import NotPublicCard from '@/components/cards/NotPublicCard.vue'
 import ConfirmedCasesDetailsCard from '@/components/cards/ConfirmedCasesDetailsCard.vue'
 import ConfirmedCasesAttributesCard from '@/components/cards/ConfirmedCasesAttributesCard.vue'
-//import ConfirmedCasesNumberCard from '@/components/cards/ConfirmedCasesNumberCard.vue'
-//import TestedNumberCard from '@/components/cards/TestedNumberCard.vue'
-//import TelephoneAdvisoryReportsNumberCard from '@/components/cards/TelephoneAdvisoryReportsNumberCard.vue'
-//import ConsultationDeskReportsNumberCard from '@/components/cards/ConsultationDeskReportsNumberCard.vue'
+// import ConfirmedCasesNumberCard from '@/components/cards/ConfirmedCasesNumberCard.vue'
+// import TestedNumberCard from '@/components/cards/TestedNumberCard.vue'
+// import TelephoneAdvisoryReportsNumberCard from '@/components/cards/TelephoneAdvisoryReportsNumberCard.vue'
+// import ConsultationDeskReportsNumberCard from '@/components/cards/ConsultationDeskReportsNumberCard.vue'
 
 export default Vue.extend({
   components: {
@@ -59,11 +58,11 @@ export default Vue.extend({
     ConfirmedCasesAttributesCardCity,
     NotPublicCard,
     ConfirmedCasesDetailsCard,
-    ConfirmedCasesAttributesCard,
-    //ConfirmedCasesNumberCard,
-    //TelephoneAdvisoryReportsNumberCard,
-    //ConsultationDeskReportsNumberCard,
-    //TestedNumberCard
+    ConfirmedCasesAttributesCard
+    // ConfirmedCasesNumberCard,
+    // TestedNumberCard,
+    // TelephoneAdvisoryReportsNumberCard,
+    // ConsultationDeskReportsNumberCard,
   },
   data() {
     const data = {

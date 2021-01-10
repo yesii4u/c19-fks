@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 const headers = [
-  { text: '公表日', value: '最終公表日' },
+  { text: '公表日', value: '公表日' },
   { text: '居住地', value: '居住地' },
   { text: '累計', value: '累計' }
 ]
@@ -14,7 +14,7 @@ type DataType = {
 }
 
 type TableDataType = {
-  最終公表日: string
+  公表日: string
   居住地: DataType['居住地']
   累計: DataType['累計']
 }
@@ -34,13 +34,7 @@ export default (data: DataType[]) => {
     headers,
     datasets: []
   }
-  // yyyy/mm/ddタイプ強制なので、文字列比較で十分
-  /*
-  tableDate.datasets = tableDate.datasets.filter(
-    //(data: any) =>  dayjs(data.リリース日).format('YYYY/MM/DD') >=  '2020/12/01'
-    (data: any) =>  data.最終公表日 >=  '2020/12/01'
-  )
-  */
+
   data.forEach(d => {
     const ymdSub = dayjs()
       .subtract(6, 'w')
@@ -48,7 +42,7 @@ export default (data: DataType[]) => {
     // yyyy/mm/ddタイプ強制なので、文字列比較で十分
     if (dayjs(d['リリース日']).format('YYYY/MM/DD') >= ymdSub) {
       const TableRow: TableDataType = {
-        最終公表日: dayjs(d['リリース日']).format('YYYY/MM/DD') ?? '不明',
+        公表日: dayjs(d['リリース日']).format('YYYY/MM/DD') ?? '不明',
         居住地: d['居住地'] ?? '不明',
         累計: d['累計'] ?? 1
       }
@@ -57,7 +51,7 @@ export default (data: DataType[]) => {
         v => v.居住地 === TableRow['居住地']
       )
       if (idx >= 0) {
-        tableDate.datasets[idx].最終公表日 = TableRow.最終公表日
+        tableDate.datasets[idx].公表日 = TableRow.公表日
         // tableDate.datasets[idx].居住地 = TableRow.居住地;
         tableDate.datasets[idx].累計++
       } else {
@@ -68,7 +62,7 @@ export default (data: DataType[]) => {
   // tableDate.datasets.sort((a, b) => (a === b ? 0 : a < b ? 1 : -1))
   // tableDate.datasets.sort((a, b) => (a.累計 === b.累計 ? 0 : a.累計 < b.累計 ? 1 : -1))
   tableDate.datasets.sort((a, b) =>
-    a.最終公表日 === b.最終公表日 ? 0 : a.最終公表日 < b.最終公表日 ? 1 : -1
+    a.公表日 === b.公表日 ? 0 : a.公表日 < b.公表日 ? 1 : -1
   )
   return tableDate
 }

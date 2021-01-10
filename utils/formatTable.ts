@@ -39,14 +39,23 @@ export default (data: DataType[]) => {
     datasets: []
   }
   data.forEach(d => {
-    const TableRow: TableDataType = {
-      公表日: dayjs(d['リリース日']).format('YYYY/MM/DD') ?? '不明',
-      居住地: d['居住地'] ?? '不明',
-      年代: d['年代'] ?? '不明',
-      性別: d['性別'] ?? '不明'
+    const ymdSub = dayjs()
+      .subtract(6, 'w')
+      .format('YYYY/MM/DD')
+    // yyyy/mm/ddタイプ強制なので、文字列比較で十分
+    if (dayjs(d['リリース日']).format('YYYY/MM/DD') >= ymdSub) {
+      const TableRow: TableDataType = {
+        公表日: dayjs(d['リリース日']).format('YYYY/MM/DD') ?? '不明',
+        居住地: d['居住地'] ?? '不明',
+        年代: d['年代'] ?? '不明',
+        性別: d['性別'] ?? '不明'
+      }
+      tableDate.datasets.push(TableRow)
     }
-    tableDate.datasets.push(TableRow)
   })
-  tableDate.datasets.sort((a, b) => (a === b ? 0 : a < b ? 1 : -1))
+  // tableDate.datasets.sort((a, b) => (a === b ? 0 : a < b ? 1 : -1))
+  tableDate.datasets.sort((a, b) =>
+    a.公表日 === b.公表日 ? 0 : a.公表日 < b.公表日 ? 1 : -1
+  )
   return tableDate
 }

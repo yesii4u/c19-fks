@@ -22,7 +22,8 @@ import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 // import DataViewBasicInfoPanel from '@/components/DataViewBasicInfoPanel.vue'
-import MapView from '@/components/DataXyMapCityF.vue'
+// import MapView from '@/components/DataXyMapCityF.vue'
+import MapView from '@/components/DataXyMapCityFlf.vue'
 
 export default Vue.extend({
   components: {
