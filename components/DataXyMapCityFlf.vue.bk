@@ -127,13 +127,6 @@ export default Vue.extend({
       this.theData.patients_summary.data[this.theData.patients_summary.data.length - 1].label
     )
     */
-    /* notuse
-    const imageurlD = {
-        url:    '/images/blue01.png',
-        width:  50,
-        height: 70
-    };
-    */
     const imageboundsD = [
       [37.051277285581236, 141.31341102527992],
       [37.504796327472725, 141.56001327561324]
@@ -247,10 +240,10 @@ export default Vue.extend({
     // let theinfo;
     // <l-marker
     // Geoデータの準備
-    const gCityName = ''
-    const gmaxInfectionPersonCount = 0
+    let gCityName = ''
+    let gmaxInfectionPersonCount = 0
     this.lastUpdate = this.getLastUpdate()
-    this.setInfectionPersonCountData(gmaxInfectionPersonCount)
+    this.setInfectionPersonCountData()
 
     // Geoデータの作図
     // <l-geo-json
@@ -259,7 +252,7 @@ export default Vue.extend({
     // let geojsonLayer = L.geoJson(this.geojson, {    //returnはlayerである
     L.geoJson(this.geojson, {
       // returnはlayerである
-      style: this.style(gCityName),
+      style: this.style,
       onEachFeature: this.onEachFeature
     }).addTo(map)
     // map.fitBounds(geojsonL1.getBounds());       //zoomに相反
@@ -372,15 +365,6 @@ export default Vue.extend({
         //this.map.fitBounds(e.target.getBounds());
     },
     */
-    /*
-    onEachFeatureEv: function(feature: any, layer: any) {
-      layer.on({
-          mouseover: this.highlightFeature,
-          mouseout: this.resetHighlight,
-          click: this.zoomToFeature
-      });
-    },
-    */
     makeLegend(map: any, L: any) {
       const legend = L.control({ position: 'bottomright' })
 
@@ -454,14 +438,6 @@ export default Vue.extend({
       }
       // _div.innerHTML += '<br>'
       info.addTo(map)
-
-      /*
-      const self = this;    //yesii
-        self.showOverlay = true
-        setTimeout(() => {
-          self.showOverlay = false
-        }, 2000)
-      */
     },
 
     getLastUpdate() {
@@ -480,7 +456,6 @@ export default Vue.extend({
     getInfectionPersonCount() {
       let dataDate = '01/10'
       let mapCityNameDate = '01/10'
-      // let theYYYY = ''    //'2020'
       this.totalPersons = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
@@ -496,21 +471,20 @@ export default Vue.extend({
           dataDate = mapCityNameDate
         }
       }
-      // this.lastUpdate = theYYYY + this.lastUpdate
-      // this.lastUpdate = this.lastUpdate
+
       return 1
     },
-    setInfectionPersonCountData(gmaxInfectionPersonCount: number) {
+    setInfectionPersonCountData() {
       // データの取得
       this.getInfectionPersonCount()
-      gmaxInfectionPersonCount = 0
+      this.gmaxInfectionPersonCount = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
         row['居住地'] = this.$t(row['居住地'])
         row['累計'] = this.$t(row['累計'])
 
-        if (gmaxInfectionPersonCount < Number(row['累計'])) {
-          gmaxInfectionPersonCount = Number(row['累計'])
+        if (this.gmaxInfectionPersonCount < Number(row['累計'])) {
+          this.gmaxInfectionPersonCount = Number(row['累計'])
         }
         this.remainderData.push({
           name: row['居住地'],
@@ -537,7 +511,6 @@ export default Vue.extend({
             : 'なし'
         }</h5>`
       )
-
       // Event設定
       layer.on({
         mouseover: this.highlightFeature,
@@ -545,7 +518,7 @@ export default Vue.extend({
         // click: this.zoomToFeature
       })
     },
-    style(feature: any, gCityName: string) {
+    style(feature: any) {
       // remainderData調整
       this.remainderData = this.remainderData.filter(
         (data: any) => data.name !== feature.properties.N03_004
@@ -555,7 +528,7 @@ export default Vue.extend({
       // (02)
       // marker設定
       // 重複はしない
-      if (gCityName !== feature.properties.N03_004) {
+      if (this.gCityName !== feature.properties.N03_004) {
         // popup-contents
         let item = '' // contents
         let item2 = 0 // pesons-count
@@ -594,7 +567,6 @@ export default Vue.extend({
             lng1 = feature.geometry.coordinates[0][0][0] // 経度
           }
           // 県外陽性者は地図のfeatureに出現しないので無視される
-
           // popupmarker-add
           this.marker.push({
             name: feature.properties.N03_004,
@@ -606,13 +578,12 @@ export default Vue.extend({
           })
         }
       }
-      // this.layer.bindPopup(feature.properties.popupContent);
 
       // colorの設定
       // (03)
       // for next-step
       let idx = 0 // findindex
-      gCityName = feature.properties.N03_004
+      this.gCityName = feature.properties.N03_004
       let thePersonCount = 0
       if (
         (idx = this.patientsTable.datasets.findIndex(
@@ -668,14 +639,6 @@ export default Vue.extend({
           radius: this.markerbase * rowMarker.count,
           color: this.markercolor,
           weight: this.weight
-          /*
-              color: this.markercolor,
-              weight: this.weight,
-              opacity: 0.8,
-              fillColor: '#FF0000',
-              fillOpacity: 0.3,
-              radius: this.markerbase * this.marker.count
-              */
         }).addTo(map)
       }
     }

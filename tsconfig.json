@@ -36,8 +36,5 @@
     "node_modules",
     ".nuxt",
     "dist"
-  ],
-  "router": {
-    "base": "/c19fks/"
-  }
+  ]
 }

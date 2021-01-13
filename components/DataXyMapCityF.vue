@@ -165,13 +165,6 @@ export default Vue.extend({
       this.theData.patients_summary.data[this.theData.patients_summary.data.length - 1].label
     )
     */
-    /* notuse
-    const imageurlD = {
-        url:    '/images/blue01.png',
-        width:  50,
-        height: 70
-    };
-    */
     const imageboundsD = [
       [37.051277285581236, 141.31341102527992],
       [37.504796327472725, 141.56001327561324]
@@ -400,7 +393,6 @@ export default Vue.extend({
     getInfectionPersonCount() {
       let dataDate = '01/10'
       let mapCityNameDate = '01/10'
-      // let theYYYY = ''    //'2020'
       this.totalPersons = 0
       for (const row of this.patientsTable.datasets) {
         row['公表日'] = this.$t(row['公表日'])
@@ -416,8 +408,7 @@ export default Vue.extend({
           dataDate = mapCityNameDate
         }
       }
-      // this.lastUpdate = theYYYY + this.lastUpdate
-      // this.lastUpdate = this.lastUpdate
+
       return 1
     },
     setInfectionPersonCountData() {
@@ -522,7 +513,6 @@ export default Vue.extend({
               lng1 = feature.geometry.coordinates[0][0][0] // 経度
             }
             // 県外陽性者は地図のfeatureに出現しないので無視される
-
             // popupmarker-add
             this.marker.push({
               name: feature.properties.N03_004,
