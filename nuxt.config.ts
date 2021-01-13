@@ -48,8 +48,12 @@ const config: NuxtConfig = {
       }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', href: '/apple-touch-icon-precomposed.png' },
+      // yesii
+      { rel: 'icon', type: 'image/x-icon', href: '/c19fks/favicon.ico' },
+      {
+        rel: 'apple-touch-icon',
+        href: '/c19fks/apple-touch-icon-precomposed.png'
+      },
       {
         rel: 'stylesheet',
         href: 'https://use.fontawesome.com/releases/v5.6.1/css/all.css'
@@ -59,6 +63,10 @@ const config: NuxtConfig = {
         href: 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css'
       }
     ]
+  },
+  router: {
+    // yesii
+    base: '/c19fks/'
   },
   /*
    ** Customize the progress-bar color
