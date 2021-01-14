@@ -70,10 +70,10 @@ const config: NuxtConfig = {
         href: 'https://use.fontawesome.com/releases/v5.6.1/css/all.css'
       },
       */
-      { rel: 'icon', type: 'image/x-icon', href: '/c19fks/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: 'avicon.ico' },
       {
         rel: 'apple-touch-icon',
-        href: '/c19fks/apple-touch-icon-precomposed.png'
+        href: 'apple-touch-icon-precomposed.png'
       },
       {
         rel: 'stylesheet',
@@ -87,9 +87,11 @@ const config: NuxtConfig = {
   },
   // yesii
   // routerBase,
+  /*
   router: {
     base: '/c19fks/'
   },
+  *?
   /*
    ** Customize the progress-bar color
    */
