@@ -86,7 +86,7 @@ const config: NuxtConfig = {
     ]
   },
   // yesii
-  routerBase,
+  // routerBase,
   /*
   router: {
     base: '/c19fks/'
@@ -237,4 +237,10 @@ const config: NuxtConfig = {
   }
 }
 
-export default config
+export default {
+  router: {
+    base: process.env.DEPLOY_ENV === 'GH_PAGES' ? '/c19fks/' : ''
+  },
+  config
+}
+// export default config
