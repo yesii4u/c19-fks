@@ -3,7 +3,7 @@ import i18n from './nuxt-i18n.config'
 const purgecss = require('@fullhuman/postcss-purgecss')
 const autoprefixer = require('autoprefixer')
 const environment = process.env.NODE_ENV || 'development'
-/*
+
 const routerBase =
   process.env.DEPLOY_ENV === 'GH_PAGES'
     ? {
@@ -13,7 +13,7 @@ const routerBase =
         }
       }
     : {}
-*/
+
 const config: NuxtConfig = {
   // mode: 'universal',
   ssr: false, // yesii
@@ -70,10 +70,10 @@ const config: NuxtConfig = {
         rel: 'stylesheet',
         href: 'https://use.fontawesome.com/releases/v5.6.1/css/all.css'
       },
-      { rel: 'icon', type: 'image/x-icon', href: '/c19fks/avicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: 'avicon.ico' },
       {
         rel: 'apple-touch-icon',
-        href: '/c19fks/apple-touch-icon-precomposed.png'
+        href: 'apple-touch-icon-precomposed.png'
       },
       {
         rel: 'stylesheet',
@@ -86,10 +86,12 @@ const config: NuxtConfig = {
     ]
   },
   // yesii
-  // routerBase,
+  routerBase,
+  /*
   router: {
     base: '/c19fks/'
   },
+  */
   /*
    ** Customize the progress-bar color
    */
