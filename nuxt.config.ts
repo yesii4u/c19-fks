@@ -238,9 +238,6 @@ const config: NuxtConfig = {
 }
 
 export default {
-  router: {
-    base: process.env.DEPLOY_ENV === 'GH_PAGES' ? '/c19fks/' : ''
-  },
-  config
+  routerBase
 }
 // export default config
