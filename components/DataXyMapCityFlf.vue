@@ -642,7 +642,6 @@ export default Vue.extend({
       }
     }
   }
-
   /*
   head: (): MetaInfo => ({
     title: '陽性者属性(直近6週間)'
