@@ -99,7 +99,7 @@
 // memo
 // mapviewとして分割すべきかされど[slot]化は見通しを悪くする気がするのだが
 import Vue from 'vue'
-import { MetaInfo } from 'vue-meta'
+// import { MetaInfo } from 'vue-meta'
 import dayjs from 'dayjs'
 import { convertDatetimeToISO8601Format } from '@/utils/formatDate'
 // import {LMap, LTileLayer, LMarker, LCircleMarker, LIcon} from 'vue2-leaflet';
@@ -112,10 +112,9 @@ import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 import MapGeojson from '@/data/fukushima_map.geojson.json'
 import MapCity from '@/data/mapcity.json'
-// mapgeojsonは重い。
-// async()にしてもこのステージではimportと大差ない...
-// いまどきresourcesに気を遣う環境...
-// JHは細部をverlayしているのか？
+// mapgeojsonは重い
+// async()にしてもこのステージでは大差ない...
+// 重いというよりdeployサイトが遅い
 
 export default Vue.extend({
   components: {
@@ -576,10 +575,13 @@ export default Vue.extend({
       }
       return this.getColor(rPercentData)
     }
-  },
+  }
+
+  /*
   head: (): MetaInfo => ({
     title: '陽性者属性(直近6週間)'
   })
+*/
 })
 </script>
 
