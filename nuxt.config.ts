@@ -58,14 +58,6 @@ const config: NuxtConfig = {
       }
     ],
     link: [
-      // yesii
-      /*
-      { rel: 'icon', type: 'image/x-icon', href: 'routerBase/favicon.ico' },
-      {
-        rel: 'apple-touch-icon',
-        href: 'routerBase/apple-touch-icon-precomposed.png'
-      },
-      */
       {
         rel: 'stylesheet',
         href: 'https://use.fontawesome.com/releases/v5.6.1/css/all.css'
@@ -86,7 +78,7 @@ const config: NuxtConfig = {
     ]
   },
   // yesii
-  // routerBase,
+  routerBase,
   /*
   router: {
     base: '/c19fks/'
@@ -237,7 +229,4 @@ const config: NuxtConfig = {
   }
 }
 
-export default {
-  routerBase
-}
-// export default config
+export default config
