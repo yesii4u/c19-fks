@@ -58,14 +58,22 @@ const config: NuxtConfig = {
       }
     ],
     link: [
+      // yesii
+      /*
+      { rel: 'icon', type: 'image/x-icon', href: 'routerBase/favicon.ico' },
+      {
+        rel: 'apple-touch-icon',
+        href: 'routerBase/apple-touch-icon-precomposed.png'
+      },
+      */
       {
         rel: 'stylesheet',
         href: 'https://use.fontawesome.com/releases/v5.6.1/css/all.css'
       },
-      { rel: 'icon', type: 'image/x-icon', href: 'avicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: routerBase + 'avicon.ico' },
       {
         rel: 'apple-touch-icon',
-        href: 'apple-touch-icon-precomposed.png'
+        href: routerBase + 'apple-touch-icon-precomposed.png'
       },
       {
         rel: 'stylesheet',
