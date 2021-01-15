@@ -4,6 +4,8 @@ const purgecss = require('@fullhuman/postcss-purgecss')
 const autoprefixer = require('autoprefixer')
 const environment = process.env.NODE_ENV || 'development'
 
+const routerBase = '/c19fks/'
+/*
 const routerBase =
   process.env.DEPLOY_ENV === 'GH_PAGES'
     ? {
@@ -13,6 +15,7 @@ const routerBase =
         }
       }
     : {}
+*/
 
 const config: NuxtConfig = {
   // mode: 'universal',
@@ -58,14 +61,6 @@ const config: NuxtConfig = {
       }
     ],
     link: [
-      // yesii
-      /*
-      { rel: 'icon', type: 'image/x-icon', href: 'routerBase/favicon.ico' },
-      {
-        rel: 'apple-touch-icon',
-        href: 'routerBase/apple-touch-icon-precomposed.png'
-      },
-      */
       { rel: 'icon', type: 'image/x-icon', href: 'avicon.ico' },
       {
         rel: 'apple-touch-icon',
@@ -86,12 +81,10 @@ const config: NuxtConfig = {
     ]
   },
   // yesii
-  routerBase,
-  /*
+  // routerBase,
   router: {
-    base: '/c19fks/'
+    base: routerBase
   },
-  */
   /*
    ** Customize the progress-bar color
    */
