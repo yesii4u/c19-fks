@@ -3,7 +3,7 @@
     <div>
       <MapView
         id="attributes-of-confirmed-cases-city"
-        :title="$t('陽性者属性(直近6週間)')"
+        :title="$t('陽性者属性(直近４週間)')"
         :title-id="'attributes-of-confirmed-cases-mapf'"
         :the-data="theData"
         :date="graphData.patients.date"
@@ -23,7 +23,7 @@ import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity' // yesii
 // import DataViewBasicInfoPanel from '@/components/DataViewBasicInfoPanel.vue'
 import MapView from '@/components/DataXyMapCityF.vue'
-// import MapView from '@/components/DataXyMapCityFlf.vue' 
+// import MapView from '@/components/DataXyMapCityFlf.vue'
 
 export default Vue.extend({
   components: {

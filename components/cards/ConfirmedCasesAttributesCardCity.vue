@@ -2,7 +2,7 @@
   <v-col cols="12" md="6" class="DataCard">
     <data-table
       id="attributes-of-confirmed-cases-city"
-      :title="$t('陽性者属性(直近6週間)')"
+      :title="$t('陽性者属性(直近４週間)')"
       :title-id="'attributes-of-confirmed-cases-city'"
       :chart-data="patientsTable"
       :chart-option="{}"

@@ -7,7 +7,7 @@
       />
       <div class="MapCity-Header">
         <span class="MapCity-Title">
-          {{ $t('陽性者属性(直近6週間)') }}
+          {{ $t('陽性者属性(直近４週間)') }}
         </span>
         <span class="MapCity-DataInfo">
           <span class="MapCity-DataInfo-summary">
@@ -579,7 +579,7 @@ export default Vue.extend({
 
   /*
   head: (): MetaInfo => ({
-    title: '陽性者属性(直近6週間)'
+    title: '陽性者属性(直近４週間)'
   })
 */
 })
