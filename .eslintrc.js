@@ -7,7 +7,6 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   rules: {
-    // yesii
     '@typescript-eslint/no-unused-vars': ['off'],
     'no-unused-vars': 'off',
     'vue/max-attributes-per-line': 'off',

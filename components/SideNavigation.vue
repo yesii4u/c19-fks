@@ -43,7 +43,6 @@
             <v-divider v-show="item.divider" class="SideNavigation-Divider" />
           </v-container>
         </v-list>
-        <!-- yesii  -->
         <!--div class="SideNavigation-LanguageMenu">
           <div
             v-if="this.$i18n.locales.length > 1"

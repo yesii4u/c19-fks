@@ -4,6 +4,7 @@ const purgecss = require('@fullhuman/postcss-purgecss')
 const autoprefixer = require('autoprefixer')
 const environment = process.env.NODE_ENV || 'development'
 
+// github pages
 const routerBase = '/c19fks/'
 /*
 const routerBase =
@@ -19,7 +20,7 @@ const routerBase =
 
 const config: NuxtConfig = {
   // mode: 'universal',
-  ssr: false, // yesii
+  ssr: false,
   target: 'static',
   /*
    ** Headers of the page
@@ -80,7 +81,6 @@ const config: NuxtConfig = {
       }
     ]
   },
-  // yesii
   // routerBase,
   router: {
     base: routerBase

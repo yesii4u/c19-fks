@@ -20,7 +20,7 @@
 <script>
 import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
-import TimeBarChart from '@/components/TimeLineChart.vue' // yesii
+import TimeBarChart from '@/components/TimeLineChart.vue'
 // import TimeBarChart from '@/components/TimeBarChart.vue'
 
 export default {

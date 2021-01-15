@@ -19,7 +19,7 @@
 import Vue from 'vue'
 import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
-import formatTable from '@/utils/formatTableCity' // yesii
+import formatTable from '@/utils/formatTableCity'
 import DataTable from '@/components/DataTableCity.vue'
 
 export default Vue.extend({

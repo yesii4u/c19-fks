@@ -71,7 +71,7 @@ import 'leaflet/dist/leaflet.css'
 // import axios from 'axios'
 // import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
-import formatTable from '@/utils/formatTableCity' // yesii
+import formatTable from '@/utils/formatTableCity'
 import MapGeojson from '@/data/fukushima_map.geojson.json'
 import MapCity from '@/data/mapcity.json'
 // mapgeojsonは重い
@@ -140,7 +140,7 @@ export default Vue.extend({
         minZoom: 2,
         maxZoom: 18,
         center: [37.40056, 140.35972]
-        // pCanvas: true // yesii ??
+        // pCanvas: true
       },
       customIcon: {
         iconUrl: '/images/blue01.png',
