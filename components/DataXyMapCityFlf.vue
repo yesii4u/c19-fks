@@ -61,7 +61,6 @@
 // memo
 // mapviewとして分割すべきかされど[slot]化は見通しを悪くする気がするのだが
 import Vue from 'vue'
-// eslint-disable-next-line no-unused-vars
 import { MetaInfo } from 'vue-meta'
 import dayjs from 'dayjs'
 import { convertDatetimeToISO8601Format } from '@/utils/formatDate'
