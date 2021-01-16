@@ -84,7 +84,7 @@ export default Vue.extend({
         this.patientsGraph.length - 1
       ].cumulative.toLocaleString(),
       */
-      lText: String(totalPersons),
+      lText: String(totalPersons).toLocaleString(),
       sText: this.$t('{date}の累計', {
         date: this.patientsGraph[this.patientsGraph.length - 1].label
       }),
