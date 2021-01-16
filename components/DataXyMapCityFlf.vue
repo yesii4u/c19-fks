@@ -76,7 +76,6 @@ import MapGeojson from '@/data/fukushima_map.geojson.json'
 import MapCity from '@/data/mapcity.json'
 // mapgeojsonは重い
 // async()にしてもこのステージでは大差ない...
-// 重いというよりdeployサイトが遅い
 
 export default Vue.extend({
   components: {
@@ -239,7 +238,7 @@ export default Vue.extend({
     // let theinfo;
     // <l-marker
     // Geoデータの準備
-    const gCityName = '' // eslint-disable-line no-unused-vars
+    const gCityName = ''
     const gmaxInfectionPersonCount = 0 // eslint-disable-line no-unused-vars
     this.lastUpdate = this.getLastUpdate()
     this.setInfectionPersonCountData()
