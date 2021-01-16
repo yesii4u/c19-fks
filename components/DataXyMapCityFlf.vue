@@ -238,7 +238,7 @@ export default Vue.extend({
     // let theinfo;
     // <l-marker
     // Geoデータの準備
-    const gCityName = ''
+    const gCityName = '' // eslint-disable-line no-unused-vars
     const gmaxInfectionPersonCount = 0 // eslint-disable-line no-unused-vars
     this.lastUpdate = this.getLastUpdate()
     this.setInfectionPersonCountData()
