@@ -367,12 +367,12 @@ export default Vue.extend({
       })
 
       // this.theinfo.update();
-      // this.geojsonD.resetStyle(e.target);
+      // this.geojsonLayer.resetStyle(e.target);
     },
     /*
     zoomToFeature(e: any) {
-      // this.map.fitBounds(e.target.getBounds())
-      // this.map.fitBounds(this.Marker.getBounds());
+      const layer = e.target;
+      //this.map.fitBounds(e.target.getBounds());
     },
     */
     getLastUpdate() {
@@ -439,7 +439,7 @@ export default Vue.extend({
           `<h4>${
             feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
           }
-            ${feature.properties.N03_004}</h4><h5>陽性者: ${
+        ${feature.properties.N03_004}</h4><h5>陽性者: ${
             // (idx =(this.patientsTable.datasets.findindex((v: any) => v.居住地 === feature.properties.N03_004)))>=0    //!!!error
             (idx = this.patientsTable.datasets.findIndex(
               (v: any) => v.居住地 === feature.properties.N03_004
@@ -454,7 +454,6 @@ export default Vue.extend({
           mouseout: this.resetHighlight
           // click: this.zoomToFeature
         })
-        //  }
       }
 
       // 地図にデータを設定する:style
@@ -522,14 +521,12 @@ export default Vue.extend({
             })
           }
         }
-        // this.layer.bindPopup(feature.properties.popupContent);
 
         // colorの設定
         // (03)
         // for next-step
         // idx=0     //findindex
         gCityName = feature.properties.N03_004
-        // if (gCityName !== feature.properties.N03_004){
         let thePersonCount = 0
         if (
           (idx = this.patientsTable.datasets.findIndex(
@@ -573,6 +570,20 @@ export default Vue.extend({
         rPercentData = 0
       }
       return this.getColor(rPercentData)
+    },
+    makePopup(map: any, L: any, marker: any) {
+      // for(let i=0; i<this.marker.length; i++) {
+      // for (const row of this.patientsTable.datasets) {
+      for (const rowMarker of marker) {
+        const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
+        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
+        markerP.bindPopup(rowMarker.contents).addTo(map)
+        L.circle([rowMarker.lat, rowMarker.lng], {
+          radius: this.markerbase * rowMarker.count,
+          color: this.markercolor,
+          weight: this.weight
+        }).addTo(map)
+      }
     }
   },
   head: (): MetaInfo => ({

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="MapCity">
     <div class="MapCity-Inner">
       <link
@@ -72,7 +72,8 @@ import 'leaflet/dist/leaflet.css'
 // import Data from '@/data/data.json'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTableCity'
-import MapGeojson from '@/data/fukushima_map.geojson.json'
+// import MapGeojson from '@/data/fukushima_map.geojson.json'
+import MapGeojson from '@/data/us-states.json'
 import MapCity from '@/data/mapcity.json'
 // mapgeojsonは重い
 // async()にしてもこのステージでは大差ない...
@@ -131,14 +132,19 @@ export default Vue.extend({
     ]
     const dataObject: any = {
       tile: {
+        /*
         url: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
         attribution: `<a href='https://maps.gsi.go.jp/development/ichiran.html'>国土地理院</a>(ズームレベル2～8:Shoreline data is derived from: United States. National Imagery and Mapping Agency. "Vector Map Level 0 (VMAP0)." Bethesda, MD: Denver, CO: The Agency; USGS Information Services, 1997.), <a href='http://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html'>行政区域データ出典「国土数値情報」</a>`
+        */
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>`
       },
       mapOptions: {
-        zoom: 9,
+        zoom: 4,
         minZoom: 2,
         maxZoom: 18,
-        center: [37.40056, 140.35972]
+        // center: [37.40056,140.35972]
+        center: [37.8, -96]
         // pCanvas: true
       },
       customIcon: {
@@ -262,9 +268,6 @@ export default Vue.extend({
     // <l-popup
     // add.popup
     this.makePopup(map, L, this.marker)
-
-    // <l-circle
-    // add.circle
   },
   methods: {
     toggleShareMenu() {
@@ -312,15 +315,15 @@ export default Vue.extend({
     },
 
     getColor(d: number) {
-      return d > 85
+      return d > 1000
         ? '#800026'
-        : d > 75
+        : d > 500
         ? '#BD0026'
-        : d > 65
+        : d > 200
         ? '#E31A1C'
-        : d > 50
+        : d > 100
         ? '#FC4E2A'
-        : d > 35
+        : d > 50
         ? '#FD8D3C'
         : d > 20
         ? '#FEB24C'
@@ -328,6 +331,18 @@ export default Vue.extend({
         ? '#FED976'
         : '#FFEDA0'
     },
+    /*
+    style: function(feature: any) {
+        return {
+            fillColor: this.getColor(feature.properties.density),       // density
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.7
+        };
+    },
+    */
     highlightFeature(e: any) {
       const layer = e.target
       // let info = this.L.control();
@@ -368,20 +383,19 @@ export default Vue.extend({
 
       legend.onAdd = () => {
         const div = L.DomUtil.create('div', 'legend')
-        const grades = [0, 10, 20, 35, 50, 65, 75, 85]
+        const grades = [0, 10, 20, 50, 100, 200, 500, 1000]
         // labels = [],
         // from, to;
         const labels = [
-          '0-10 %',
-          '10-20',
-          '20-35',
-          '35-50',
-          '50-65',
-          '65-75',
-          '75-85',
-          '85% >'
+          '#FFEDA0',
+          '#800026',
+          '#FEB24C',
+          '#FD8D3C',
+          '#FC4E2A',
+          '#E31A1C',
+          '#BD0026',
+          '#800026'
         ]
-
         /*
         for (let i = 0; i < grades.length; i++) {
           from = grades[i];
