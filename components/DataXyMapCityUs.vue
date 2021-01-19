@@ -213,7 +213,7 @@ export default Vue.extend({
     })
 
     // <l-tile-layer
-    // add.tile: 地理院タイル：淡色
+    // add.tile
     const tileLayer = L.tileLayer(this.tile.url, {
       attribution: this.tile.attribution,
       zoom: this.mapOptions.zoom,
@@ -384,8 +384,9 @@ export default Vue.extend({
       legend.onAdd = () => {
         const div = L.DomUtil.create('div', 'legend')
         const grades = [0, 10, 20, 50, 100, 200, 500, 1000]
-        // labels = [],
-        // from, to;
+        const labels = []
+        let from, to
+        /*
         const labels = [
           '#FFEDA0',
           '#800026',
@@ -396,19 +397,25 @@ export default Vue.extend({
           '#BD0026',
           '#800026'
         ]
-        /*
-        for (let i = 0; i < grades.length; i++) {
-          from = grades[i];
-          to = grades[i + 1];
-
-          labels.push(
-            '<i class="legend" style="background:' + this.getColor(from + 1) + '"></i> ' +
-            from + (to ? '&ndash;' + to : '+'));
-        }
-        div.innerHTML = labels.join('<br>');
         */
 
-        div.innerHTML = '<div><b>人数比</b></div>'
+        for (let i = 0; i < grades.length; i++) {
+          from = grades[i]
+          to = grades[i + 1]
+
+          labels.push(
+            '<i style="background:' +
+              this.getColor(from + 1) +
+              '">&nbsp;&nbsp;</i>&nbsp;&nbsp; ' +
+              from +
+              (to ? '&ndash;' + to : '+')
+          )
+        }
+        div.innerHTML = '<div><b>Legend</b></div>'
+        div.innerHTML += labels.join('<br>')
+
+        /*
+        div.innerHTML = '<div><b>Legend</b></div>'
         for (let i = 0; i < grades.length; i++) {
           div.innerHTML +=
             '<i style="background:' +
@@ -417,6 +424,7 @@ export default Vue.extend({
             labels[i] +
             '</br>'
         }
+        */
         return div
       }
       legend.addTo(map)
@@ -437,6 +445,7 @@ export default Vue.extend({
 
       // also here you want the reference to be info, therefore this = info
       // so do not use es6 to access the class instance
+      // feature.properties.N03_004
       info.update = function(props: any) {
         _div.innerHTML =
           '<h4>US Population Density</h4>' +

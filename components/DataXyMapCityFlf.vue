@@ -207,7 +207,7 @@ export default Vue.extend({
     })
 
     // <l-tile-layer
-    // add.tile: 地理院タイル：淡色
+    // add.tile
     const tileLayer = L.tileLayer(this.tile.url, {
       attribution: this.tile.attribution,
       zoom: this.mapOptions.zoom,
@@ -235,15 +235,18 @@ export default Vue.extend({
       row['累計'] = this.$t(row['累計'])
     }
 
-    // let theinfo;
-    // <l-marker
     // Geoデータの準備
-    const gCityName = '' // eslint-disable-line no-unused-vars
+    const gCityName = ''
+    let theinfo: any
+    const gNumStr = ''
     const gmaxInfectionPersonCount = 0 // eslint-disable-line no-unused-vars
+    // <l-marker
+    // eslint-disable-line no-unused-vars
     this.lastUpdate = this.getLastUpdate()
     this.setInfectionPersonCountData()
 
     // Geoデータの作図
+
     // <l-geo-json
     // add.geoJson
     // add.style-Events
@@ -267,37 +270,6 @@ export default Vue.extend({
     // add.circle
   },
   methods: {
-    toggleShareMenu() {
-      this.displayShare = !this.displayShare
-    },
-    closeShareMenu() {
-      this.displayShare = false
-    },
-    isCopyAvailable() {
-      return !!navigator.clipboard
-    },
-    copyEmbedCode() {
-      const self = this
-      navigator.clipboard.writeText(this.graphEmbedValue).then(() => {
-        self.closeShareMenu()
-
-        self.showOverlay = true
-        setTimeout(() => {
-          self.showOverlay = false
-        }, 2000)
-      })
-    },
-    copyImageCode() {
-      const self = this
-      navigator.clipboard.writeText(this.graphImageValue).then(() => {
-        self.closeShareMenu()
-
-        self.showOverlay = true
-        setTimeout(() => {
-          self.showOverlay = false
-        }, 2000)
-      })
-    },
     permalink(host: boolean = false, embed: boolean = false) {
       let permalink = '/cards/' + this.titleId
       if (embed) {
@@ -310,7 +282,6 @@ export default Vue.extend({
       }
       return permalink
     },
-
     getColor(d: number) {
       return d > 85
         ? '#800026'
@@ -330,7 +301,7 @@ export default Vue.extend({
     },
     highlightFeature(e: any) {
       const layer = e.target
-      // let info = this.L.control();
+      // this.theinfo = this.L.control();
       layer.setStyle({
         weight: 5,
         color: '#666',
@@ -338,14 +309,14 @@ export default Vue.extend({
         fillOpacity: 0.7
       })
 
-      // this.theinfo.update(layer.feature.properties);
+      this.theinfo.update(layer.feature.properties)
       // if (!this.L.Browser.ie && !this.L.Browser.opera) {
       layer.bringToFront()
       // }
     },
     resetHighlight(e: any) {
       const layer = e.target
-      // let info = this.L.control();
+      // this.theinfo = this.L.control();
       layer.setStyle({
         weight: 2,
         opacity: 1,
@@ -354,7 +325,7 @@ export default Vue.extend({
         fillOpacity: 0.7
       })
 
-      // this.theinfo.update();
+      this.theinfo.update()
       // this.geojsonLayer.resetStyle(e.target);
     },
     /*
@@ -369,8 +340,8 @@ export default Vue.extend({
       legend.onAdd = () => {
         const div = L.DomUtil.create('div', 'legend')
         const grades = [0, 10, 20, 35, 50, 65, 75, 85]
-        // labels = [],
-        // from, to;
+        // let labels = []
+        let from, to
         const labels = [
           '0-10 %',
           '10-20',
@@ -379,22 +350,10 @@ export default Vue.extend({
           '50-65',
           '65-75',
           '75-85',
-          '85% >'
+          '85 >'
         ]
 
-        /*
-        for (let i = 0; i < grades.length; i++) {
-          from = grades[i];
-          to = grades[i + 1];
-
-          labels.push(
-            '<i class="legend" style="background:' + this.getColor(from + 1) + '"></i> ' +
-            from + (to ? '&ndash;' + to : '+'));
-        }
-        div.innerHTML = labels.join('<br>');
-        */
-
-        div.innerHTML = '<div><b>人数比</b></div>'
+        div.innerHTML = '<div><b>陽性者数比率</b></div>'
         for (let i = 0; i < grades.length; i++) {
           div.innerHTML +=
             '<i style="background:' +
@@ -410,34 +369,31 @@ export default Vue.extend({
     makeLabel(map: any, L: any) {
       // control that shows state info on hover
       const info = L.control()
-      // this.theinfo = info;
+      this.theinfo = info
 
       // here you want the reference to be info, therefore this = info
       // so do not use es6 to access the the class instance
-      const _div = L.DomUtil.create('div', 'info')
+      let _div: any
       info.onAdd = function() {
-        // this._div = L.DomUtil.create('div', 'info');
+        _div = L.DomUtil.create('div', 'info')
         this.update()
         return _div
       }
 
       // also here you want the reference to be info, therefore this = info
       // so do not use es6 to access the class instance
-      info.update = function(props: any) {
+      // feature.properties.N03_004
+      info.update = function(properties: any) {
         _div.innerHTML =
-          '<h4>US Population Density</h4>' +
-          (props
-            ? '<b>' +
-              props.name +
-              '</b><br />' +
-              props.density +
-              ' people / mi<sup>2</sup>'
-            : 'Hover over a state')
+          '<h4>陽性者数（直近４週間）</h4>' +
+          (properties
+            ? '<b>' + properties.N03_004 + '</b><br />' + properties.N03_007
+            : 'マウス移動してくだい')
+        console.log('Props=>', this.gNumStr, '<=Pro=', properties)
       }
       // _div.innerHTML += '<br>'
       info.addTo(map)
     },
-
     getLastUpdate() {
       this.sumInfoOfPatients = {
         lText: this.patientsGraph[
@@ -491,10 +447,9 @@ export default Vue.extend({
       }
     },
     onEachFeature(feature: any, layer: any) {
-      // 地図にデータを設定する:popup
+      // 地図にデータを設定する:popup(features)
       // (01)
       let idx = 0
-
       // geojsonデータの同一行政区名重複を避ける
       layer.bindPopup(
         `<h4>${
@@ -505,10 +460,11 @@ export default Vue.extend({
           (idx = this.patientsTable.datasets.findIndex(
             (v: any) => v.居住地 === feature.properties.N03_004
           )) >= 0
-            ? `${this.patientsTable.datasets[idx].累計}人`
-            : 'なし'
+            ? (this.gNumStr = `${this.patientsTable.datasets[idx].累計}人`)
+            : (this.gNumStr = 'なし')
         }</h5>`
       )
+      console.log('Num1=-->', this.gNumStr, '<--')
       // Event設定
       layer.on({
         mouseover: this.highlightFeature,
@@ -546,7 +502,7 @@ export default Vue.extend({
             '人'
           item2 = this.patientsTable.datasets[idx].累計
         } else {
-          item = feature.properties.N03_004 + ' :\n ' + 'なし'
+          item = feature.properties.N03_004 + ' :\n ' + 'なし2'
           item2 = 0
         }
         if (item2 > 0) {
@@ -576,7 +532,7 @@ export default Vue.extend({
           })
         }
       }
-
+      console.log('Num2=-->', this.gNumStr, '<--')
       // colorの設定
       // (03)
       // for next-step
@@ -627,7 +583,6 @@ export default Vue.extend({
     },
     makePopup(map: any, L: any, marker: any) {
       // for(let i=0; i<this.marker.length; i++) {
-      // for (const row of this.patientsTable.datasets) {
       for (const rowMarker of marker) {
         const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
         // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
@@ -866,16 +821,15 @@ export default Vue.extend({
 
 /*
 .leaflet-control::after {
-    content: url(/images/persons01.png);
-    z-index: 1000;
-    display: block;
-    position: absolute;
-    bottom: .5em;
-    right: 1em;
-    transform: scale(0.9);
+  content: url(/images/persons01.png);
+  z-index: 1000;
+  display: block;
+  position: absolute;
+  bottom: 0.5em;
+  right: 1em;
+  transform: scale(0.9);
 }
 */
-
 .info {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
@@ -903,6 +857,8 @@ export default Vue.extend({
 */
 
 .legend {
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
   background-color: white;
   line-height: 18px;
   color: #555;
