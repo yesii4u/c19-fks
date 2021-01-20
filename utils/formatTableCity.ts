@@ -37,7 +37,7 @@ export default (data: DataType[]) => {
 
   data.forEach(d => {
     const ymdSub = dayjs()
-      .subtract(3, 'w')
+      .subtract(4, 'w')
       .format('YYYY/MM/DD')
     // yyyy/mm/ddタイプ強制なので、文字列比較で十分
     if (dayjs(d['リリース日']).format('YYYY/MM/DD') >= ymdSub) {

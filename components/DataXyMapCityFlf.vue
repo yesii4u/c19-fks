@@ -259,7 +259,7 @@ export default Vue.extend({
     // map.fitBounds(geojsonL1.getBounds());       //zoomに相反
 
     // add.Legend
-    this.makeLabel(map, L)
+    // this.makeLabel(map, L)
     this.makeLegend(map, L)
 
     // <l-popup
@@ -298,6 +298,14 @@ export default Vue.extend({
         : d > 10
         ? '#FED976'
         : '#FFEDA0'
+    },
+    getPatientsF(area: String) {
+      let idx: any
+      return (idx = this.patientsTable.datasets.findIndex(
+        (v: any) => v.居住地 === area
+      )) >= 0
+        ? `${this.patientsTable.datasets[idx].累計}人`
+        : 'なし'
     },
     highlightFeature(e: any) {
       const layer = e.target
@@ -343,7 +351,7 @@ export default Vue.extend({
         // let labels = []
         let from, to
         const labels = [
-          '0-10 %',
+          '0-10  %',
           '10-20',
           '20-35',
           '35-50',
@@ -373,23 +381,25 @@ export default Vue.extend({
 
       // here you want the reference to be info, therefore this = info
       // so do not use es6 to access the the class instance
-      let _div: any
+      // let _div: any
       info.onAdd = function() {
-        _div = L.DomUtil.create('div', 'info')
+        this._div = L.DomUtil.create('div', 'info')
         this.update()
-        return _div
+        return this._div
       }
 
       // also here you want the reference to be info, therefore this = info
       // so do not use es6 to access the class instance
       // feature.properties.N03_004
       info.update = function(properties: any) {
-        _div.innerHTML =
-          '<h4>陽性者数（直近４週間）</h4>' +
+        this._div.innerHTML =
+          '<h4>US Population Density</h4>' +
           (properties
-            ? '<b>' + properties.N03_004 + '</b><br />' + properties.N03_007
+            ? // ? '<b>' + properties.N03_004 + '</b><br />' + getPatientsF(properties.N03_004)   //why?
+              '<b>' + properties.N03_004 + '</b><br />' + properties.N03_007
             : 'マウス移動してくだい')
-        console.log('Props=>', this.gNumStr, '<=Pro=', properties)
+
+        // console.log('PropsF=>',  properties)
       }
       // _div.innerHTML += '<br>'
       info.addTo(map)
@@ -405,7 +415,7 @@ export default Vue.extend({
         unit: this.$t('人')
       }
 
-      return '2020/01/10'
+      return '2020/01/10' // dummy
     },
     getInfectionPersonCount() {
       let dataDate = '01/10'
@@ -426,7 +436,7 @@ export default Vue.extend({
         }
       }
 
-      return 1
+      return 1 // dummy
     },
     setInfectionPersonCountData() {
       // データの取得
@@ -451,7 +461,7 @@ export default Vue.extend({
       // (01)
       let idx = 0
       // geojsonデータの同一行政区名重複を避ける
-      layer.bindPopup(
+      layer.bindTooltip(
         `<h4>${
           feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
         }
@@ -464,7 +474,7 @@ export default Vue.extend({
             : (this.gNumStr = 'なし')
         }</h5>`
       )
-      console.log('Num1=-->', this.gNumStr, '<--')
+
       // Event設定
       layer.on({
         mouseover: this.highlightFeature,
@@ -502,7 +512,7 @@ export default Vue.extend({
             '人'
           item2 = this.patientsTable.datasets[idx].累計
         } else {
-          item = feature.properties.N03_004 + ' :\n ' + 'なし2'
+          item = feature.properties.N03_004 + ' :\n ' + 'なし'
           item2 = 0
         }
         if (item2 > 0) {
@@ -532,7 +542,7 @@ export default Vue.extend({
           })
         }
       }
-      console.log('Num2=-->', this.gNumStr, '<--')
+
       // colorの設定
       // (03)
       // for next-step
@@ -585,7 +595,6 @@ export default Vue.extend({
       // for(let i=0; i<this.marker.length; i++) {
       for (const rowMarker of marker) {
         const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
-        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
         markerP.bindPopup(rowMarker.contents).addTo(map)
         L.circle([rowMarker.lat, rowMarker.lng], {
           radius: this.markerbase * rowMarker.count,
@@ -830,6 +839,7 @@ export default Vue.extend({
   transform: scale(0.9);
 }
 */
+
 .info {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;

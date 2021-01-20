@@ -403,7 +403,7 @@ export default Vue.extend({
         // geojsonデータの同一行政区名重複を避ける
         // if (gCityName != feature.properties.N03_004){
         // gCityName = feature.properties.N03_004
-        layer.bindPopup(
+        layer.bindTooltip(
           `<h4>${
             feature.properties.N03_003 ? `${feature.properties.N03_003} ` : ''
           }
@@ -544,7 +544,6 @@ export default Vue.extend({
       // for (const row of this.patientsTable.datasets) {
       for (const rowMarker of marker) {
         const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
-        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
         markerP.bindPopup(rowMarker.contents).addTo(map)
         L.circle([rowMarker.lat, rowMarker.lng], {
           radius: this.markerbase * rowMarker.count,
