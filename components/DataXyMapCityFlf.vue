@@ -237,7 +237,7 @@ export default Vue.extend({
 
     // Geoデータの準備
     const gCityName = ''
-    let theinfo: any
+    // let theinfo: any
     const gNumStr = ''
     const gmaxInfectionPersonCount = 0 // eslint-disable-line no-unused-vars
     // <l-marker
@@ -299,14 +299,6 @@ export default Vue.extend({
         ? '#FED976'
         : '#FFEDA0'
     },
-    getPatientsF(area: String) {
-      let idx: any
-      return (idx = this.patientsTable.datasets.findIndex(
-        (v: any) => v.居住地 === area
-      )) >= 0
-        ? `${this.patientsTable.datasets[idx].累計}人`
-        : 'なし'
-    },
     highlightFeature(e: any) {
       const layer = e.target
       // this.theinfo = this.L.control();
@@ -317,7 +309,7 @@ export default Vue.extend({
         fillOpacity: 0.7
       })
 
-      this.theinfo.update(layer.feature.properties)
+      // this.theinfo.update(layer.feature.properties)
       // if (!this.L.Browser.ie && !this.L.Browser.opera) {
       layer.bringToFront()
       // }
@@ -333,7 +325,7 @@ export default Vue.extend({
         fillOpacity: 0.7
       })
 
-      this.theinfo.update()
+      // this.theinfo.update()
       // this.geojsonLayer.resetStyle(e.target);
     },
     /*
@@ -373,36 +365,6 @@ export default Vue.extend({
         return div
       }
       legend.addTo(map)
-    },
-    makeLabel(map: any, L: any) {
-      // control that shows state info on hover
-      const info = L.control()
-      this.theinfo = info
-
-      // here you want the reference to be info, therefore this = info
-      // so do not use es6 to access the the class instance
-      // let _div: any
-      info.onAdd = function() {
-        this._div = L.DomUtil.create('div', 'info')
-        this.update()
-        return this._div
-      }
-
-      // also here you want the reference to be info, therefore this = info
-      // so do not use es6 to access the class instance
-      // feature.properties.N03_004
-      info.update = function(properties: any) {
-        this._div.innerHTML =
-          '<h4>US Population Density</h4>' +
-          (properties
-            ? // ? '<b>' + properties.N03_004 + '</b><br />' + getPatientsF(properties.N03_004)   //why?
-              '<b>' + properties.N03_004 + '</b><br />' + properties.N03_007
-            : 'マウス移動してくだい')
-
-        // console.log('PropsF=>',  properties)
-      }
-      // _div.innerHTML += '<br>'
-      info.addTo(map)
     },
     getLastUpdate() {
       this.sumInfoOfPatients = {
