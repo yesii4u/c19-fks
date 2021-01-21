@@ -556,8 +556,11 @@ export default Vue.extend({
     makePopup(map: any, L: any, marker: any) {
       // for(let i=0; i<this.marker.length; i++) {
       for (const rowMarker of marker) {
-        const markerP = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
-        markerP.bindPopup(rowMarker.contents).addTo(map)
+        // popup
+        const markerPopup = L.marker([rowMarker.lat, rowMarker.lng]).addTo(map)
+        markerPopup.bindPopup(rowMarker.contents).addTo(map)
+
+        // circle
         L.circle([rowMarker.lat, rowMarker.lng], {
           radius: this.markerbase * rowMarker.count,
           color: this.markercolor,
