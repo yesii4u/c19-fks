@@ -78,12 +78,7 @@ import MapCity from '@/data/mapcity.json'
 // async()にしてもこのステージでは大差ない...
 
 export default Vue.extend({
-  components: {
-    // LMap,
-    // LTileLayer,
-    // LMarker,
-    // LIcon
-  },
+  components: {},
   props: {
     title: {
       type: String,

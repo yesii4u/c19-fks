@@ -46,8 +46,8 @@ export default {
     const data = {
       Data,
       contactsGraph,
-      // lastAcquisiteDate: `${lad.getMonth() + 1}/${lad.getDate()}`   //yesii
       lad,
+      // lastAcquisiteDate: `${lad.getMonth() + 1}/${lad.getDate()}`   //yesii
       lastAcquisiteDate: `${lad.getFullYear()}/${(
         '00' +
         (lad.getMonth() + 1)

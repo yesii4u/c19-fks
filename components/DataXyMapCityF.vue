@@ -116,12 +116,7 @@ import MapCity from '@/data/mapcity.json'
 // async()にしてもこのステージでは大差ない...
 
 export default Vue.extend({
-  components: {
-    // LMap,
-    // LTileLayer,
-    // LMarker,
-    // LIcon
-  },
+  components: {},
   props: {
     title: {
       type: String,
@@ -254,19 +249,6 @@ export default Vue.extend({
     // let theinfo;
     this.lastUpdate = this.getLastUpdate()
     this.setInfectionPersonCountData()
-
-    // style-color-geoinfo-eventsの追加
-    // this.makeStyle(this.map, this.L, this.marker)
-
-    // add.Legend
-    // this.makeLabel(map, L);
-    // this.makeLegend(map, L);
-
-    // add.popup
-    // this.makePopup(map, L, this.marker)
-
-    // <l-circle
-    // add.circle
   },
   methods: {
     permalink(host: boolean = false, embed: boolean = false) {
@@ -354,7 +336,7 @@ export default Vue.extend({
         unit: this.$t('人')
       }
 
-      return '2020/01/10'
+      return '2020/01/10' // dummy
     },
     getInfectionPersonCount() {
       let dataDate = '01/10'
@@ -375,7 +357,7 @@ export default Vue.extend({
         }
       }
 
-      return 1
+      return 1 // dummy
     },
     setInfectionPersonCountData() {
       // データの取得

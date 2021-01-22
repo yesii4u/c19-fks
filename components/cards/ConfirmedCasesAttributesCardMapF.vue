@@ -28,7 +28,6 @@ import MapView from '@/components/DataXyMapCityF.vue'
 export default Vue.extend({
   components: {
     MapView
-    // DataViewBasicInfoPanel
   },
   props: {
     graphData: {
@@ -44,7 +43,6 @@ export default Vue.extend({
     // const theData =Vue.util.extend ({}, this.graphData);
     // 感染者数グラフ
     const patientsGraph = formatGraph(this.graphData.patients_summary.data)
-    // const patientsGraph = formatGraph(Data.patients_summary.data)
     // 感染者数
     const patientsTable = formatTable(this.graphData.patients.data)
 
@@ -72,7 +70,6 @@ export default Vue.extend({
     this.theData = {}
     Object.assign(this.theData, this.graphData)
     // this.theData = Vue.util.extend({}, this.graphData);
-    // this.Data = this.graphData
     // 感染者数グラフ
     this.patientsGraph = formatGraph(this.graphData.patients_summary.data)
     // 感染者数
