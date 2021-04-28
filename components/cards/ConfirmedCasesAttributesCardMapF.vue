@@ -3,7 +3,7 @@
     <div>
       <MapView
         id="attributes-of-confirmed-cases-city"
-        :title="$t('陽性者属性(直近４週間)')"
+        :title="$t('陽性者属性(直近２週間)')"
         :title-id="'attributes-of-confirmed-cases-mapf'"
         :the-data="theData"
         :date="graphData.patients.date"
