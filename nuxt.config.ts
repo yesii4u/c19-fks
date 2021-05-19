@@ -5,7 +5,7 @@ const autoprefixer = require('autoprefixer')
 const environment = process.env.NODE_ENV || 'development'
 
 // github pages
-const routerBase = '/c19fks/'
+const routerBase = '/covid19fks1/'
 /*
 const routerBase =
   process.env.DEPLOY_ENV === 'GH_PAGES'
